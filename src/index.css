@@ -1,0 +1,494 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dashboard 首页动画 */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  /* 保留系统鼠标指针，不隐藏 */
+  
+  /* 浅色模式默认样式 */
+  body {
+    @apply bg-gray-50 text-gray-900;
+  }
+  
+  .light body {
+    @apply bg-gray-50 text-gray-900;
+  }
+  
+  .light .min-h-screen {
+    @apply bg-gray-50;
+  }
+  
+  /* 深色模式样式 */
+  .dark body {
+    @apply bg-gray-900 text-white;
+  }
+  
+  /* 深色模式主容器样式 */
+  .dark .min-h-screen {
+    @apply bg-gray-900;
+  }
+  
+  .dark .bg-gray-50 {
+    @apply bg-gray-900;
+  }
+  
+  /* 护眼模式样式 */
+  .eye-care body {
+    @apply bg-green-50 text-green-800;
+  }
+}
+
+/* 主题样式 */
+:root {
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+/* 侧边栏动画 */
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+
+
+/* 深色模式全局样式 */
+.dark {
+  /* 基础背景和文字 */
+  --bg-primary: #111827;    /* gray-900 */
+  --bg-secondary: #1f2937;  /* gray-800 */
+  --bg-tertiary: #374151;   /* gray-700 */
+  --text-primary: #ffffff;  /* white */
+  --text-secondary: #e5e7eb; /* gray-200 */
+  --text-tertiary: #d1d5db;  /* gray-300 */
+  --border-primary: #4b5563; /* gray-600 */
+  --border-secondary: #6b7280; /* gray-500 */
+}
+
+/* 深色模式背景样式 */
+.dark body {
+  @apply bg-gray-900 text-white;
+}
+
+.dark .min-h-screen {
+  @apply bg-gray-900;
+}
+
+.dark .bg-gray-50 {
+  @apply bg-gray-900;
+}
+
+.dark .bg-white {
+  @apply bg-gray-800;
+}
+
+/* 深色模式文字样式 */
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  @apply text-white;
+}
+
+.dark p {
+  @apply text-gray-200;
+}
+
+.dark .text-gray-900 {
+  @apply text-white;
+}
+
+.dark .text-gray-600 {
+  @apply text-gray-200;
+}
+
+.dark .text-gray-500 {
+  @apply text-gray-300;
+}
+
+/* 深色模式边框样式 */
+.dark .border-gray-200 {
+  @apply border-gray-600;
+}
+
+.dark .border-blue-200 {
+  @apply border-blue-700;
+}
+
+/* 深色模式卡片样式 */
+.dark .card {
+  @apply bg-gray-800 border-gray-600;
+}
+
+.dark .card h1,
+.dark .card h2,
+.dark .card h3,
+.dark .card h4,
+.dark .card h5,
+.dark .card h6 {
+  @apply text-white;
+}
+
+.dark .card p {
+  @apply text-gray-200;
+}
+
+.dark .card .text-gray-600 {
+  @apply text-gray-200;
+}
+
+.dark .card .text-gray-500 {
+  @apply text-gray-300;
+}
+
+/* 深色模式渐变背景 */
+.dark .bg-gradient-to-r {
+  background: linear-gradient(to right, #1f2937, #374151) !important;
+}
+
+.dark .from-blue-50 {
+  background-color: #1f2937 !important;
+}
+
+.dark .to-indigo-50 {
+  background-color: #374151 !important;
+}
+
+/* 深色模式蓝色卡片统一 */
+.dark .bg-gradient-to-r.from-blue-50.to-indigo-50 {
+  background: linear-gradient(to right, #1f2937, #374151) !important;
+  @apply border-gray-600;
+}
+
+/* 深色模式导航菜单样式 */
+.dark .text-gray-600 {
+  @apply text-gray-200;
+}
+
+.dark .hover\:bg-gray-100:hover {
+  @apply hover:bg-gray-700;
+}
+
+.dark .hover\:text-gray-900:hover {
+  @apply hover:text-white;
+}
+
+/* 深色模式按钮样式 */
+.dark .btn-secondary {
+  @apply bg-gray-700 text-white hover:bg-gray-600;
+}
+
+.dark .btn-ghost {
+  @apply text-gray-200 hover:bg-gray-700 hover:text-white;
+}
+
+/* 深色模式输入框样式 */
+.dark .input {
+  @apply border-gray-600 bg-gray-800 placeholder:text-gray-400 text-white;
+}
+
+/* 深色模式特定元素覆盖 */
+.dark .bg-gradient-to-r.from-blue-50.to-indigo-50 {
+  background: linear-gradient(to right, #1f2937, #374151) !important;
+  @apply border-gray-600;
+}
+
+.dark .border-blue-200 {
+  @apply border-gray-600;
+}
+
+/* 深色模式特色功能卡片统一 */
+.dark .card.bg-gradient-to-r {
+  background: linear-gradient(to right, #1f2937, #374151) !important;
+  @apply border-gray-600;
+}
+
+/* 深色模式特色功能卡片文字颜色 */
+.dark .card.bg-gradient-to-r h1,
+.dark .card.bg-gradient-to-r h2,
+.dark .card.bg-gradient-to-r h3,
+.dark .card.bg-gradient-to-r h4,
+.dark .card.bg-gradient-to-r h5,
+.dark .card.bg-gradient-to-r h6 {
+  @apply text-white;
+}
+
+.dark .card.bg-gradient-to-r p {
+  @apply text-gray-200;
+}
+
+.dark .card.bg-gradient-to-r .text-gray-600 {
+  @apply text-gray-200;
+}
+
+.dark .card.bg-gradient-to-r .text-gray-500 {
+  @apply text-gray-300;
+}
+
+.dark .card.bg-gradient-to-r .text-gray-700 {
+  @apply text-gray-200;
+}
+
+/* 深色模式特色功能卡片内所有文字强制白色 */
+.dark .card.bg-gradient-to-r * {
+  color: inherit;
+}
+
+.dark .card.bg-gradient-to-r .text-gray-700,
+.dark .card.bg-gradient-to-r .text-gray-600,
+.dark .card.bg-gradient-to-r .text-gray-500,
+.dark .card.bg-gradient-to-r .text-gray-400 {
+  @apply text-gray-200;
+}
+
+/* 确保特色功能卡片内的span和div文字也清晰 */
+.dark .card.bg-gradient-to-r span,
+.dark .card.bg-gradient-to-r div {
+  @apply text-gray-200;
+}
+
+/* 深色模式统计卡片 */
+.dark .bg-blue-100 {
+  @apply bg-blue-900;
+}
+
+.dark .bg-green-100 {
+  @apply bg-green-900;
+}
+
+.dark .bg-purple-100 {
+  @apply bg-purple-900;
+}
+
+.dark .bg-orange-100 {
+  @apply bg-orange-900;
+}
+
+/* 深色模式文字颜色覆盖 */
+.dark .text-blue-600 {
+  @apply text-blue-400;
+}
+
+.dark .text-green-600 {
+  @apply text-green-400;
+}
+
+.dark .text-purple-600 {
+  @apply text-purple-400;
+}
+
+.dark .text-orange-600 {
+  @apply text-orange-400;
+}
+
+/* 富文本编辑器占位符样式 */
+[data-placeholder]:empty:before {
+  content: attr(data-placeholder);
+  color: #6b7280;
+  pointer-events: none;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply btn bg-primary-600 text-white hover:bg-primary-700;
+  }
+  
+  .btn-secondary {
+    @apply btn bg-gray-100 text-gray-900 hover:bg-gray-200;
+  }
+  
+  .dark .btn-secondary {
+    @apply bg-gray-700 text-white hover:bg-gray-600;
+  }
+  
+  .dark .btn-ghost {
+    @apply text-gray-200 hover:bg-gray-700 hover:text-white;
+  }
+  
+  .btn-outline {
+    @apply btn border border-gray-600 bg-transparent hover:bg-gray-800;
+  }
+  
+  .input {
+    @apply flex h-10 w-full rounded-md border border-gray-600 bg-gray-800 px-3 py-2 text-sm placeholder:text-gray-400 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  
+  .card {
+    @apply rounded-lg border border-gray-600 bg-gray-800 shadow-sm;
+  }
+}
+
+/* 七彩炫光动画 */
+@keyframes gradient-xy {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+}
+
+.animate-gradient-xy {
+  animation: gradient-xy 4s ease infinite;
+}
+
+/* line-clamp 工具类 */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* 自定义动画 */
+@keyframes slide-in-from-bottom-4 {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-in {
+  animation: slide-in-from-bottom-4 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.3s ease-out;
+}
+
+/* AI聊天窗口大小调整过渡 */
+.ai-chat-window {
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+/* 设置面板动画 */
+.settings-panel {
+  animation: slide-down 0.2s ease-out;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 深色主题select下拉选项样式 */
+select option {
+  background-color: #1F2937;
+  color: #E5E7EB;
+  padding: 0.5rem;
+}
+
+select option:checked {
+  background-color: #374151;
+  color: #fff;
+}
+
+select option:hover {
+  background-color: #374151;
+}
+
+/* 鼠标粒子轨迹效果 */
+@keyframes particle-fade {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+}
+
+.cursor-particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.4) 100%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  animation: particle-fade 0.6s ease-out forwards;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+}
+
+/* 深色模式下的粒子样式 */
+.dark .cursor-particle {
+  background: radial-gradient(circle, rgba(96, 165, 250, 0.8) 0%, rgba(167, 139, 250, 0.4) 100%);
+  box-shadow: 0 0 12px rgba(96, 165, 250, 0.6);
+}
+
