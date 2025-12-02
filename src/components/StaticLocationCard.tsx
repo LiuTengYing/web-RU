@@ -21,7 +21,7 @@ interface StaticLocationCardProps {
  */
 const StaticLocationCard: React.FC<StaticLocationCardProps> = ({
   companyName = 'AutomotiveHu',
-  address = '广东省广州市白云区齐富路',
+  address = '广东省东莞市塘厦镇河畔路9号',
   lat = 23.1945,
   lng = 113.2718,
   className = '',

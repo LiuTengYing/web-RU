@@ -154,10 +154,11 @@ const Admin: React.FC = () => {
   const [announcementCloseable, setAnnouncementCloseable] = useState(true)
   const [announcementRememberDays, setAnnouncementRememberDays] = useState(7)
   const [newContactInfo, setNewContactInfo] = useState({
-    type: 'email' as 'email' | 'phone' | 'address' | 'online' | 'forum' | 'whatsapp',
+    type: 'email' as 'email' | 'phone' | 'whatsapp' | 'telegram' | 'vk' | 'youtube',
     label: '',
     value: '',
     icon: 'Mail',
+    qrCode: '',
     isActive: true,
     order: 1
   })
@@ -445,10 +446,11 @@ const Admin: React.FC = () => {
       
       // 清空表单
       setNewContactInfo({
-        type: 'email' as 'email' | 'phone' | 'address' | 'online' | 'forum',
+        type: 'email' as 'email' | 'phone' | 'whatsapp' | 'telegram' | 'vk' | 'youtube',
         label: '',
         value: '',
         icon: 'Mail',
+        qrCode: '',
         isActive: true,
         order: 1
       })
@@ -2051,7 +2053,7 @@ const Admin: React.FC = () => {
       {/* 新增车型模态框 */}
       {showAddVehicle && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+          <div className="bg-slate-950 rounded-lg p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-semibold mb-4">{t('admin.vehicles.addVehicle')}</h3>
             <div className="space-y-4">
               {/* 品牌选择 - 支持手动输入，同时显示已有品牌建议 */}
@@ -2175,7 +2177,7 @@ const Admin: React.FC = () => {
       {/* 编辑车型模态框 */}
       {showEditVehicle && editingVehicle && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md">
+          <div className="bg-slate-950 rounded-lg p-6 w-full max-w-md">
                           <h3 className="text-lg font-semibold mb-4">{t('admin.vehicles.editVehicle')}</h3>
             <div className="space-y-4">
               <div>
@@ -2930,7 +2932,7 @@ const Admin: React.FC = () => {
                     </div>
 
                     {/* 留言内容 */}
-                    <div className="bg-gray-900/50 rounded-lg p-4 mb-4">
+                    <div className="bg-slate-950/50 rounded-lg p-4 mb-4">
                       <p className="text-gray-300 whitespace-pre-wrap">{feedback.content}</p>
                     </div>
 
@@ -2982,7 +2984,7 @@ const Admin: React.FC = () => {
 
                     {/* 回复表单 */}
                     {replyingTo === feedback.id ? (
-                      <div className="bg-gray-900/30 rounded-lg p-4 border border-gray-700">
+                      <div className="bg-slate-950/30 rounded-lg p-4 border border-gray-700">
                         <textarea
                           value={replyContent}
                           onChange={(e) => setReplyContent(e.target.value)}
@@ -3091,7 +3093,7 @@ const Admin: React.FC = () => {
       {/* 新增文档模态框 */}
       {showAddDocument && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-slate-950 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-semibold mb-4">
               {newDocument.type === 'article' ? t('admin.documents.createGeneralDocument') : 
                newDocument.type === 'video' ? t('admin.documents.createVideoTutorial') : t('admin.documents.uploadFile')}
@@ -3199,7 +3201,7 @@ const Admin: React.FC = () => {
       {/* 编辑文档模态框 */}
       {showEditDocument && editingDocument && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+          <div className="bg-slate-950 rounded-lg p-6 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-semibold mb-4">{t('knowledge.editDocument')}</h3>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -3304,7 +3306,7 @@ const Admin: React.FC = () => {
       {/* 添加联系信息模态框 */}
       {showAddContactInfo && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md">
+          <div className="bg-slate-950 rounded-lg p-6 w-full max-w-md">
                           <h3 className="text-lg font-semibold mb-4">{t('admin.contact.add')}</h3>
             <div className="space-y-4">
               <div>
@@ -3312,12 +3314,14 @@ const Admin: React.FC = () => {
                 <select
                   className="w-full px-3 py-2 border border-gray-600/50 rounded-md"
                   value={newContactInfo.type}
-                  onChange={(e) => setNewContactInfo({...newContactInfo, type: e.target.value as 'email' | 'phone' | 'address' | 'online' | 'forum' | 'whatsapp'})}
+                  onChange={(e) => setNewContactInfo({...newContactInfo, type: e.target.value as 'email' | 'phone' | 'whatsapp' | 'telegram' | 'vk' | 'youtube'})}
                 >
                   <option value="email">{t('contact.email')}</option>
                   <option value="phone">{t('contact.phone')}</option>
-                  <option value="address">{t('contact.address')}</option>
-                  <option value="online">{t('contact.onlineService')}</option>
+                  <option value="whatsapp">WhatsApp</option>
+                  <option value="telegram">Telegram</option>
+                  <option value="vk">VK</option>
+                  <option value="youtube">YouTube</option>
                   <option value="forum">{t('contact.info.forum')}</option>
                   <option value="whatsapp">{t('contact.info.whatsapp')}</option>
                 </select>
@@ -3382,7 +3386,7 @@ const Admin: React.FC = () => {
       {/* 编辑联系信息模态框 */}
       {showEditContactInfo && editingContactInfo && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg p-6 w-full max-w-md">
+          <div className="bg-slate-950 rounded-lg p-6 w-full max-w-md">
                           <h3 className="text-lg font-semibold mb-4">{t('admin.contact.edit')}</h3>
             <div className="space-y-4">
               <div>
@@ -3463,7 +3467,7 @@ const Admin: React.FC = () => {
       {/* 结构化文章编辑器模态框 */}
       {showStructuredArticleEditor && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg w-full max-w-7xl max-h-[95vh] overflow-hidden">
+          <div className="bg-slate-950 rounded-lg w-full max-w-7xl max-h-[95vh] overflow-hidden">
             <StructuredArticleEditor
               article={editingStructuredArticle}
               onSave={async (article: any) => {
@@ -3623,8 +3627,8 @@ const Admin: React.FC = () => {
       {/* 编辑/创建视频教程模态框 */}
       {showVideoEditModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700 sticky top-0 bg-gray-900 z-10">
+          <div className="bg-slate-950 rounded-lg w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-700 sticky top-0 bg-slate-950 z-10">
               <h2 className="text-lg font-semibold text-white">
                 {editingDocument?.id || editingDocument?._id ? t('common.edit') : t('admin.documents.createVideoTutorial')}
               </h2>
@@ -3878,7 +3882,7 @@ const Admin: React.FC = () => {
       {/* 文档预览模态框 */}
       {showPreviewModal && previewDocument && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-900 rounded-lg w-full max-w-7xl max-h-[95vh] overflow-hidden">
+          <div className="bg-slate-950 rounded-lg w-full max-w-7xl max-h-[95vh] overflow-hidden">
             <div className="flex items-center justify-between p-6 border-b border-gray-700">
               <h2 className="text-xl font-semibold text-white">{t('admin.documents.previewTitle')}</h2>
               <button
@@ -3907,7 +3911,7 @@ const Admin: React.FC = () => {
       {/* 增强文档编辑器模态框 */}
       {showEnhancedDocumentEditor && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-900 rounded-lg w-full max-w-7xl h-full max-h-[95vh] flex flex-col overflow-hidden">
+          <div className="bg-slate-950 rounded-lg w-full max-w-7xl h-full max-h-[95vh] flex flex-col overflow-hidden">
             <div className="flex-1 overflow-y-auto">
               <EnhancedGeneralDocumentEditor
                 document={editingEnhancedDocument}

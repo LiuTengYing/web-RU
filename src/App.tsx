@@ -8,6 +8,7 @@ import { ToastProvider } from '@/components/ui/ToastContainer'
 import { AIProvider } from '@/contexts/AIContext'
 import { SiteSettingsProvider } from '@/contexts/SiteSettingsContext'
 import { UploadProvider } from '@/contexts/UploadContext'
+import { AuthProvider } from '@/contexts/AuthContext'
 import GlobalUploadProgress from '@/components/GlobalUploadProgress'
 import AIAssistant from '@/components/ai/AIAssistant'
 import CustomCursor from '@/components/CustomCursor'
@@ -32,6 +33,13 @@ const Privacy = lazy(() => import('@/pages/Privacy'))
 const Terms = lazy(() => import('@/pages/Terms'))
 const Disclaimer = lazy(() => import('@/pages/Disclaimer'))
 
+// 企业官网页面（新增）
+const Products = lazy(() => import('@/pages/Products'))
+const Cases = lazy(() => import('@/pages/Cases'))
+const News = lazy(() => import('@/pages/News'))
+const Services = lazy(() => import('@/pages/Services'))
+const About = lazy(() => import('@/pages/About'))
+
 
 function App() {
   const { t } = useTranslation()
@@ -40,8 +48,9 @@ function App() {
       <SiteSettingsProvider>
         <ThemeProvider>
           <ToastProvider>
-            <UploadProvider>
-              <AIProvider>
+            <AuthProvider>
+              <UploadProvider>
+                <AIProvider>
             <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
             <ErrorBoundary fallback={<div className="p-6 text-red-500">{t('errors.somethingWentWrong')}</div>}>
             <Suspense fallback={<div className="p-6 text-gray-500">{t('common.loading')}</div>}>
@@ -58,6 +67,14 @@ function App() {
                 <Route path="audio-generator" element={<AudioGeneratorPage />} />
                 <Route path="contact" element={<Contact />} />
                 <Route path="software-downloads" element={<SoftwareDownloads />} />
+                
+                {/* 企业官网路由 */}
+                <Route path="products" element={<Products />} />
+                <Route path="cases" element={<Cases />} />
+                <Route path="news" element={<News />} />
+                <Route path="services" element={<Services />} />
+                <Route path="about" element={<About />} />
+                
                 <Route path="privacy" element={<Privacy />} />
                 <Route path="terms" element={<Terms />} />
                 <Route path="disclaimer" element={<Disclaimer />} />
@@ -81,8 +98,9 @@ function App() {
             {/* 全局上传进度 */}
             <GlobalUploadProgress />
           </div>
-            </AIProvider>
-            </UploadProvider>
+                </AIProvider>
+              </UploadProvider>
+            </AuthProvider>
           </ToastProvider>
         </ThemeProvider>
       </SiteSettingsProvider>

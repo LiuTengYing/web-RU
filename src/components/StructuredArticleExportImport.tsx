@@ -172,7 +172,7 @@ export const StructuredArticleExportImport: React.FC<StructuredArticleExportImpo
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileJson className="h-5 w-5 text-blue-400" />
+            <FileJson className="h-5 w-5 text-primary-300" />
             {t('admin.structuredArticle.exportImport.title') || 'Export & Import'}
           </CardTitle>
           <CardDescription>
@@ -195,7 +195,7 @@ export const StructuredArticleExportImport: React.FC<StructuredArticleExportImpo
             <Button
               onClick={handleExport}
               disabled={isExporting}
-              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
+              className="bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white"
             >
               {isExporting ? (
                 <>
@@ -211,13 +211,13 @@ export const StructuredArticleExportImport: React.FC<StructuredArticleExportImpo
             </Button>
 
             {exportStats && (
-              <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-3 flex items-start gap-3">
-                <CheckCircle className="h-5 w-5 text-blue-400 mt-0.5 flex-shrink-0" />
-                <div className="text-sm text-blue-100">
+              <div className="bg-primary-900/20 border border-primary-500/30 rounded-lg p-3 flex items-start gap-3">
+                <CheckCircle className="h-5 w-5 text-primary-300 mt-0.5 flex-shrink-0" />
+                <div className="text-sm text-primary-100">
                   <p className="font-medium">
                     {t('admin.structuredArticle.export.lastExport') || 'Last Export'}
                   </p>
-                  <p className="text-xs text-blue-200 mt-1">
+                  <p className="text-xs text-primary-200 mt-1">
                     {exportStats.count} {t('admin.structuredArticle.export.articles') || 'articles'} • 
                     {new Date(exportStats.date).toLocaleString()}
                   </p>

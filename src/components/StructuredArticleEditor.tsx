@@ -800,7 +800,7 @@ const StructuredArticleEditor: React.FC<StructuredArticleEditorProps> = ({
             value={formData.basicInfo.title || ''}
             onChange={(e) => handleBasicInfoChange('title', e.target.value)}
             placeholder={t('admin.structuredArticle.titlePlaceholder')}
-            className="bg-gray-800 border-gray-600 text-gray-100 focus:border-blue-400 focus:ring-blue-400/20 placeholder:text-gray-400"
+            className="bg-gray-800 border-gray-600 text-gray-100 focus:border-primary-400 focus:ring-primary-400/20 placeholder:text-gray-400"
           />
         </div>
         
@@ -812,7 +812,7 @@ const StructuredArticleEditor: React.FC<StructuredArticleEditorProps> = ({
             value={formData.basicInfo.author || ''}
             onChange={(e) => handleBasicInfoChange('author', e.target.value)}
             placeholder={t('admin.structuredArticle.authorPlaceholder') || '输入作者名称'}
-            className="bg-gray-800 border-gray-600 text-gray-100 focus:border-blue-400 focus:ring-blue-400/20 placeholder:text-gray-400"
+            className="bg-gray-800 border-gray-600 text-gray-100 focus:border-primary-400 focus:ring-primary-400/20 placeholder:text-gray-400"
           />
         </div>
         
@@ -821,7 +821,7 @@ const StructuredArticleEditor: React.FC<StructuredArticleEditorProps> = ({
              {t('admin.structuredArticle.selectVehicle')}
            </label>
           <select
-            className="w-full px-3 py-2 bg-gray-800 border border-gray-600 text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400"
+            className="w-full px-3 py-2 bg-gray-800 border border-gray-600 text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-400"
             value={
               formData.basicInfo.brand && formData.basicInfo.model && formData.basicInfo.yearRange
                 ? `${formData.basicInfo.brand} ${formData.basicInfo.model} ${formData.basicInfo.yearRange}`
@@ -1059,7 +1059,7 @@ const StructuredArticleEditor: React.FC<StructuredArticleEditorProps> = ({
                   onClick={() => safeSetActiveSection(index)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-t-lg transition-colors ${
                     activeSection === index
-                      ? 'bg-blue-900/20 text-blue-400 border-b-2 border-blue-400'
+                      ? 'bg-primary-900/20 text-primary-300 border-b-2 border-primary-400'
                       : 'text-gray-400 hover:text-gray-200 hover:bg-gray-800/50'
                   }`}
                 >

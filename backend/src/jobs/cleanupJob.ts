@@ -1,5 +1,4 @@
 import cron from 'node-cron';
-import ossSyncService from '../services/ossSyncService';
 import ImageResource from '../models/ImageResource';
 import mongoose from 'mongoose';
 
@@ -14,36 +13,8 @@ export class CleanupJob {
     console.log('✅ 所有清理任务已启动');
   }
 
-  /**
-   * 每天凌晨 2 点执行图片清理
-   */
   private startImageCleanupJob() {
-    cron.schedule('0 2 * * *', async () => {
-      console.log('🔄 开始执行图片清理任务...');
-      
-      try {
-        const cleanedCount = await ossSyncService.cleanupOrphanedImages();
-        console.log(`✅ 图片清理完成，清理了 ${cleanedCount} 个文件`);
-        
-        // 记录清理日志
-        await this.logCleanupActivity('image_cleanup', {
-          cleanedCount,
-          timestamp: new Date(),
-          status: 'success'
-        });
-      } catch (error) {
-        console.error('❌ 图片清理任务失败:', error);
-        
-        // 记录错误日志
-        await this.logCleanupActivity('image_cleanup', {
-          error: error instanceof Error ? error.message : 'Unknown error',
-          timestamp: new Date(),
-          status: 'failed'
-        });
-      }
-    });
-    
-    console.log('📅 图片清理任务已调度: 每天凌晨 2:00');
+    console.log('📅 图片清理任务已禁用（OSS服务未配置）');
   }
 
   /**
@@ -68,20 +39,14 @@ export class CleanupJob {
           let cleanedCount = 0;
           for (const file of tempFiles) {
             try {
-              // 从 OSS 删除文件
-              const deleteResult = await ossSyncService.deleteImage(file.url, 'temp_cleanup');
-              
-              if (deleteResult.success) {
-                // 更新数据库状态
-                await ImageResource.findByIdAndUpdate(
-                  file._id,
-                  { 
-                    status: 'deleted', 
-                    deletedAt: new Date() 
-                  }
-                );
-                cleanedCount++;
-              }
+              await ImageResource.findByIdAndUpdate(
+                file._id,
+                { 
+                  status: 'deleted', 
+                  deletedAt: new Date() 
+                }
+              );
+              cleanedCount++;
             } catch (error) {
               console.error(`❌ 清理临时文件失败: ${file.url}`, error);
             }
@@ -231,12 +196,9 @@ export class CleanupJob {
     try {
       switch (type) {
         case 'images':
-          const imagesCleanedCount = await ossSyncService.cleanupOrphanedImages();
-          console.log(`✅ 手动图片清理完成，清理了 ${imagesCleanedCount} 个文件`);
-          return { success: true, cleanedCount: imagesCleanedCount };
+          return { success: false, error: '图片清理功能已禁用（OSS服务未配置）' };
           
         case 'temp':
-          // 执行临时文件清理逻辑
           const cutoffDate = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
           const tempFiles = await ImageResource.find({
             status: 'temp',
@@ -246,7 +208,6 @@ export class CleanupJob {
           let tempCleanedCount = 0;
           for (const file of tempFiles) {
             try {
-              await ossSyncService.deleteImage(file.url, 'manual_cleanup');
               await ImageResource.findByIdAndUpdate(
                 file._id,
                 { status: 'deleted', deletedAt: new Date() }
@@ -284,22 +245,15 @@ export class CleanupJob {
    * 获取清理任务状态
    */
   async getCleanupStatus() {
-    try {
-      const stats = await ossSyncService.getImageUsageStats();
-      
-      return {
-        imageStats: stats,
-        lastCleanup: {
-          images: '每天凌晨 2:00',
-          tempFiles: '每周日凌晨 3:00',
-          database: '每月 1 号凌晨 4:00'
-        },
-        nextCleanup: this.getNextCleanupTimes()
-      };
-    } catch (error) {
-      console.error('获取清理状态失败:', error);
-      throw error;
-    }
+    return {
+      imageStats: null,
+      lastCleanup: {
+        images: '已禁用（OSS服务未配置）',
+        tempFiles: '每周日凌晨 3:00',
+        database: '每月 1 号凌晨 4:00'
+      },
+      nextCleanup: this.getNextCleanupTimes()
+    };
   }
 
   /**

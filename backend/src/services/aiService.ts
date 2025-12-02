@@ -123,12 +123,23 @@ class AIService {
   }
 
   /**
-   * 检测文本语言（简单版本：检测是否包含中文字符）
+   * 检测文本语言（支持中文、英文、俄语）
    */
-  private detectLanguage(text: string): 'zh' | 'en' {
+  private detectLanguage(text: string): 'zh' | 'en' | 'ru' {
     // 检测是否包含中文字符（包括汉字、中文标点等）
     const chineseRegex = /[\u4e00-\u9fa5\u3000-\u303f\uff00-\uffef]/;
-    return chineseRegex.test(text) ? 'zh' : 'en';
+    if (chineseRegex.test(text)) {
+      return 'zh';
+    }
+    
+    // 检测是否包含俄语字符（西里尔字母）
+    const russianRegex = /[\u0400-\u04FF]/;
+    if (russianRegex.test(text)) {
+      return 'ru';
+    }
+    
+    // 默认为英文
+    return 'en';
   }
 
   /**
@@ -153,12 +164,21 @@ class AIService {
   /**
    * 构建选择列表消息
    */
-  private buildSelectionList(sources: any[], userLanguage: 'zh' | 'en'): string {
-    const isEnglish = userLanguage === 'en';
+  private buildSelectionList(sources: any[], userLanguage: 'zh' | 'en' | 'ru'): string {
+    let message = '';
+    let selectPrompt = '';
     
-    let message = isEnglish 
-      ? `I found ${sources.length} relevant resources. Please select which one you'd like me to explain:\n\n`
-      : `找到了 ${sources.length} 条相关资料，请选择您想了解的内容：\n\n`;
+    if (userLanguage === 'en') {
+      message = `I found ${sources.length} relevant resources. Please select which one you'd like me to explain:\n\n`;
+      selectPrompt = `Please reply with the number (1-${sources.length}) of the resource you'd like me to explain in detail.`;
+    } else if (userLanguage === 'ru') {
+      message = `Я нашел ${sources.length} релевантных ресурсов. Пожалуйста, выберите, какой из них вы хотите, чтобы я объяснил:\n\n`;
+      selectPrompt = `Пожалуйста, ответьте номером (1-${sources.length}) ресурса, который вы хотите, чтобы я подробно объяснил.`;
+    } else {
+      // 中文
+      message = `找到了 ${sources.length} 条相关资料，请选择您想了解的内容：\n\n`;
+      selectPrompt = `请回复数字 (1-${sources.length}) 选择您想要详细了解的资料。`;
+    }
 
     sources.forEach((source, index) => {
       const number = index + 1;
@@ -167,37 +187,53 @@ class AIService {
       
       if (source.type === 'video') {
         const duration = source.duration ? ` (${source.duration})` : '';
-        description = isEnglish 
-          ? `Video Tutorial${duration} - ${source.description || 'Video content about this topic'}`
-          : `视频教程${duration} - ${source.description || '关于此主题的视频内容'}`;
+        if (userLanguage === 'en') {
+          description = `Video Tutorial${duration} - ${source.description || 'Video content about this topic'}`;
+        } else if (userLanguage === 'ru') {
+          description = `Видеоурок${duration} - ${source.description || 'Видеоконтент по этой теме'}`;
+        } else {
+          description = `视频教程${duration} - ${source.description || '关于此主题的视频内容'}`;
+        }
       } else if (source.type === 'general') {
-        description = isEnglish
-          ? `Document - ${source.summary || 'Detailed information about this topic'}`
-          : `文档资料 - ${source.summary || '关于此主题的详细信息'}`;
+        if (userLanguage === 'en') {
+          description = `Document - ${source.summary || 'Detailed information about this topic'}`;
+        } else if (userLanguage === 'ru') {
+          description = `Документ - ${source.summary || 'Подробная информация по этой теме'}`;
+        } else {
+          description = `文档资料 - ${source.summary || '关于此主题的详细信息'}`;
+        }
       } else {
-        description = source.summary || source.description || (isEnglish ? 'Information about this topic' : '关于此主题的信息');
+        if (userLanguage === 'en') {
+          description = source.summary || source.description || 'Information about this topic';
+        } else if (userLanguage === 'ru') {
+          description = source.summary || source.description || 'Информация по этой теме';
+        } else {
+          description = source.summary || source.description || '关于此主题的信息';
+        }
       }
       
       message += `${number}. ${title}\n   ${description}\n\n`;
     });
 
-    message += isEnglish
-      ? `Please reply with the number (1-${sources.length}) of the resource you'd like me to explain in detail.`
-      : `请回复数字 (1-${sources.length}) 选择您想要详细了解的资料。`;
-
+    message += selectPrompt;
     return message;
   }
 
   /**
    * 处理用户选择特定资源
    */
-  public async handleResourceSelection(selectionNumber: number, sources: any[], userLanguage: 'zh' | 'en', originalQuery: string = ''): Promise<{ success: boolean; message?: string; error?: string; sources?: any[]; usage?: { promptTokens: number; completionTokens: number; totalTokens: number } }> {
+  public async handleResourceSelection(selectionNumber: number, sources: any[], userLanguage: 'zh' | 'en' | 'ru', originalQuery: string = ''): Promise<{ success: boolean; message?: string; error?: string; sources?: any[]; usage?: { promptTokens: number; completionTokens: number; totalTokens: number } }> {
     try {
       // 验证选择编号
       if (selectionNumber < 1 || selectionNumber > sources.length) {
-        const errorMsg = userLanguage === 'en' 
-          ? `Invalid selection. Please choose a number between 1 and ${sources.length}.`
-          : `无效的选择，请选择 1 到 ${sources.length} 之间的数字。`;
+        let errorMsg = '';
+        if (userLanguage === 'en') {
+          errorMsg = `Invalid selection. Please choose a number between 1 and ${sources.length}.`;
+        } else if (userLanguage === 'ru') {
+          errorMsg = `Неверный выбор. Пожалуйста, выберите число от 1 до ${sources.length}.`;
+        } else {
+          errorMsg = `无效的选择，请选择 1 到 ${sources.length} 之间的数字。`;
+        }
         
         return {
           success: true,
@@ -218,9 +254,12 @@ class AIService {
       // 根据用户语言动态调整系统提示
       let languageInstruction = '';
       if (userLanguage === 'en') {
-        languageInstruction = `\n\n⚠️ CRITICAL INSTRUCTION: The user is asking in ENGLISH. You MUST respond ONLY in English. DO NOT provide any Chinese translation or Chinese text in your response. English only!`;
+        languageInstruction = `\n\n⚠️ CRITICAL INSTRUCTION: The user is asking in ENGLISH. You MUST respond ONLY in English. DO NOT provide any Chinese or Russian translation in your response. English only!`;
+      } else if (userLanguage === 'ru') {
+        languageInstruction = `\n\n⚠️ КРИТИЧЕСКАЯ ИНСТРУКЦИЯ: Пользователь задает вопрос на РУССКОМ ЯЗЫКЕ. Вы ДОЛЖНЫ отвечать ТОЛЬКО на русском языке. НЕ предоставляйте переводы на китайский или английский язык в своем ответе. Только русский!`;
       } else {
-        languageInstruction = `\n\n⚠️ 重要指示：用户使用中文提问。请提供中英文双语回复，格式如下：\n【中文回答】\n[中文详细解答]\n\n【English Translation】\n[完整的英文翻译]`;
+        // 中文提问：提供中英俄三语回复
+        languageInstruction = `\n\n⚠️ 重要指示：用户使用中文提问。请提供中英俄三语回复，格式如下：\n【中文回答】\n[中文详细解答]\n\n【English Translation】\n[完整的英文翻译]\n\n【Русский перевод】\n[完整的俄语翻译]`;
       }
 
       // 构建内容指令
@@ -325,7 +364,8 @@ ${contentInstruction}`;
 
       // 检测用户消息的语言
       const userLanguage = latestUserMessage ? this.detectLanguage(latestUserMessage.content) : 'en';
-      console.log(`检测到用户语言: ${userLanguage === 'zh' ? '中文' : '英文'}`);
+      const languageNames = { zh: '中文', en: '英文', ru: '俄语' };
+      console.log(`检测到用户语言: ${languageNames[userLanguage]}`);
 
       // 如果有用户消息，搜索知识库
       if (latestUserMessage?.content) {
@@ -352,9 +392,14 @@ ${contentInstruction}`;
       // 根据用户语言动态调整系统提示
       let languageInstruction = '';
       if (userLanguage === 'en') {
-        languageInstruction = `\n\n⚠️ CRITICAL INSTRUCTION: The user is asking in ENGLISH. You MUST respond ONLY in English. DO NOT provide any Chinese translation or Chinese text in your response. English only!`;
+        // 英文提问：仅英文回复
+        languageInstruction = `\n\n⚠️ CRITICAL INSTRUCTION: The user is asking in ENGLISH. You MUST respond ONLY in English. DO NOT provide any Chinese or Russian translation in your response. English only!`;
+      } else if (userLanguage === 'ru') {
+        // 俄语提问：仅俄语回复
+        languageInstruction = `\n\n⚠️ КРИТИЧЕСКАЯ ИНСТРУКЦИЯ: Пользователь задает вопрос на РУССКОМ ЯЗЫКЕ. Вы ДОЛЖНЫ отвечать ТОЛЬКО на русском языке. НЕ предоставляйте переводы на китайский или английский язык в своем ответе. Только русский!`;
       } else {
-        languageInstruction = `\n\n⚠️ 重要指示：用户使用中文提问。请提供中英文双语回复，格式如下：\n【中文回答】\n[中文详细解答]\n\n【English Translation】\n[完整的英文翻译]`;
+        // 中文提问：提供中英俄三语回复
+        languageInstruction = `\n\n⚠️ 重要指示：用户使用中文提问。请提供中英俄三语回复，格式如下：\n【中文回答】\n[中文详细解答]\n\n【English Translation】\n[完整的英文翻译]\n\n【Русский перевод】\n[完整的俄语翻译]`;
       }
 
       // 增强系统提示，包含知识库上下文
@@ -496,11 +541,17 @@ ${knowledgeBaseInstruction}`;
     }
     
     // 提取查询关键词
+    // 中文和俄语查询都需要转换为英文关键词进行搜索（因为知识库内容是英文）
     let queryKeywords: string[] = [];
     if (userLanguage === 'zh') {
       queryKeywords = await this.extractAndTranslateKeywords(originalQuery);
       queryKeywords.push(originalQuery);
+    } else if (userLanguage === 'ru') {
+      // 俄语查询：提取英文关键词（知识库是英文的）
+      queryKeywords = await this.extractEnglishKeywords(originalQuery);
+      queryKeywords.push(originalQuery);
     } else {
+      // 英文查询：直接提取关键词
       queryKeywords = await this.extractEnglishKeywords(originalQuery);
       queryKeywords.push(originalQuery);
     }
@@ -565,49 +616,83 @@ ${knowledgeBaseInstruction}`;
     let context = '';
     
     // 根据用户语言设置标签
-    const labels = userLanguage === 'zh' ? {
-      document: '知识库文档',
-      type: '类型',
-      title: '标题',
-      summary: '摘要',
-      category: '分类',
-      matchedSections: '匹配的相关章节',
-      otherSections: '其他相关章节',
-      allSections: '文档章节',
-      content: '内容',
-      description: '描述',
-      platform: '视频平台',
-      duration: '时长',
-      detailedDescription: '详细说明',
-      imageText: '图文教程',
-      videoText: '视频教程',
-      section: '章节',
-      otherSection: '其他章节',
-      containsImages: '包含配图',
-      documentContains: '文档包含',
-      images: '张图片'
-    } : {
-      document: 'Knowledge Base Document',
-      type: 'Type',
-      title: 'Title',
-      summary: 'Summary',
-      category: 'Category',
-      matchedSections: 'Matched Relevant Sections',
-      otherSections: 'Other Related Sections',
-      allSections: 'Document Sections',
-      content: 'Content',
-      description: 'Description',
-      platform: 'Video Platform',
-      duration: 'Duration',
-      detailedDescription: 'Detailed Description',
-      imageText: 'Image/Text Tutorial',
-      videoText: 'Video Tutorial',
-      section: 'Section',
-      otherSection: 'Other Section',
-      containsImages: 'Contains Image',
-      documentContains: 'Document contains',
-      images: 'images'
-    };
+    let labels: any;
+    if (userLanguage === 'zh') {
+      labels = {
+        document: '知识库文档',
+        type: '类型',
+        title: '标题',
+        summary: '摘要',
+        category: '分类',
+        matchedSections: '匹配的相关章节',
+        otherSections: '其他相关章节',
+        allSections: '文档章节',
+        content: '内容',
+        description: '描述',
+        platform: '视频平台',
+        duration: '时长',
+        detailedDescription: '详细说明',
+        imageText: '图文教程',
+        videoText: '视频教程',
+        section: '章节',
+        otherSection: '其他章节',
+        containsImages: '包含配图',
+        documentContains: '文档包含',
+        images: '张图片',
+        total: '共',
+        sections: '个'
+      };
+    } else if (userLanguage === 'ru') {
+      labels = {
+        document: 'Документ базы знаний',
+        type: 'Тип',
+        title: 'Название',
+        summary: 'Резюме',
+        category: 'Категория',
+        matchedSections: 'Соответствующие разделы',
+        otherSections: 'Другие связанные разделы',
+        allSections: 'Разделы документа',
+        content: 'Содержание',
+        description: 'Описание',
+        platform: 'Видео платформа',
+        duration: 'Длительность',
+        detailedDescription: 'Подробное описание',
+        imageText: 'Учебник с изображениями',
+        videoText: 'Видеоурок',
+        section: 'Раздел',
+        otherSection: 'Другой раздел',
+        containsImages: 'Содержит изображения',
+        documentContains: 'Документ содержит',
+        images: 'изображений',
+        total: 'Всего',
+        sections: 'разделов'
+      };
+    } else {
+      labels = {
+        document: 'Knowledge Base Document',
+        type: 'Type',
+        title: 'Title',
+        summary: 'Summary',
+        category: 'Category',
+        matchedSections: 'Matched Relevant Sections',
+        otherSections: 'Other Related Sections',
+        allSections: 'Document Sections',
+        content: 'Content',
+        description: 'Description',
+        platform: 'Video Platform',
+        duration: 'Duration',
+        detailedDescription: 'Detailed Description',
+        imageText: 'Image/Text Tutorial',
+        videoText: 'Video Tutorial',
+        section: 'Section',
+        otherSection: 'Other Section',
+        containsImages: 'Contains Image',
+        documentContains: 'Document contains',
+        images: 'images',
+        total: 'Total',
+        sections: 'sections'
+      };
+    }
     
     console.log(`\n📚 开始构建知识库上下文，共 ${sources.length} 个文档`);
     
@@ -630,7 +715,7 @@ ${knowledgeBaseInstruction}`;
         
         // 如果有匹配的章节，优先显示匹配的章节内容
         if (source.matchedSections && source.matchedSections.length > 0) {
-          context += `\n✅ ${labels.matchedSections} (${userLanguage === 'zh' ? '共' : 'Total'} ${source.matchedSections.length} ${userLanguage === 'zh' ? '个' : 'sections'}):\n`;
+          context += `\n✅ ${labels.matchedSections} (${labels.total} ${source.matchedSections.length} ${labels.sections}):\n`;
           source.matchedSections.forEach((section: any, i: number) => {
             console.log(`  匹配章节 ${i + 1}: ${section.heading}`);
             console.log(`  内容长度: ${section.content?.length || 0} 字`);
@@ -648,7 +733,7 @@ ${knowledgeBaseInstruction}`;
           ) || [];
           
           if (otherSections.length > 0) {
-            context += `\n📚 ${labels.otherSections} (${userLanguage === 'zh' ? '共' : 'Total'} ${otherSections.length} ${userLanguage === 'zh' ? '个' : 'sections'}):\n`;
+            context += `\n📚 ${labels.otherSections} (${labels.total} ${otherSections.length} ${labels.sections}):\n`;
             otherSections.forEach((section: any, i: number) => {
               context += `\n【${labels.otherSection} ${i + 1}】${section.heading}\n`;
               context += `${section.content}\n`;
@@ -659,7 +744,7 @@ ${knowledgeBaseInstruction}`;
           }
         } else if (source.sections && source.sections.length > 0) {
           // 没有特定匹配章节，但有sections，显示所有sections
-          context += `\n📚 ${labels.allSections} (${userLanguage === 'zh' ? '共' : 'Total'} ${source.sections.length} ${userLanguage === 'zh' ? '个' : 'sections'}):\n`;
+          context += `\n📚 ${labels.allSections} (${labels.total} ${source.sections.length} ${labels.sections}):\n`;
           source.sections.forEach((section: any, i: number) => {
             context += `\n【${labels.section} ${i + 1}】${section.heading}\n`;
             context += `${section.content}\n`;
@@ -1643,8 +1728,9 @@ Examples:
       console.log(`原始查询: "${query}"`);
       
       // 检测查询语言
-      const isChinese = this.detectLanguage(query) === 'zh';
-      console.log(`查询语言: ${isChinese ? '中文' : '英文'}`);
+      const userLanguage = this.detectLanguage(query);
+      const languageNames = { zh: '中文', en: '英文', ru: '俄语' };
+      console.log(`查询语言: ${languageNames[userLanguage]}`);
       
       // 导入数据模型（提前导入，避免等待）
       const { GeneralDocument, VideoTutorial } = await import('../models/Document');
@@ -1652,11 +1738,18 @@ Examples:
       // 并行执行：关键词提取 + 数据库查询准备
       let searchKeywords: string[] = [];
       
-      if (isChinese) {
+      if (userLanguage === 'zh') {
         console.log('检测到中文查询，正在提取英文关键词...');
         const keywordExtractionStart = Date.now();
         searchKeywords = await this.extractAndTranslateKeywords(query);
         searchKeywords.push(query); // 同时保留原中文查询
+        console.log(`⏱️ 关键词提取耗时: ${Date.now() - keywordExtractionStart}ms`);
+      } else if (userLanguage === 'ru') {
+        console.log('检测到俄语查询，正在提取英文关键词...');
+        // 俄语查询也需要转换为英文关键词（因为知识库是英文的）
+        const keywordExtractionStart = Date.now();
+        searchKeywords = await this.extractEnglishKeywords(query);
+        searchKeywords.push(query); // 同时保留原俄语查询
         console.log(`⏱️ 关键词提取耗时: ${Date.now() - keywordExtractionStart}ms`);
       } else {
         console.log('检测到英文查询，正在提取关键词...');
@@ -1897,7 +1990,7 @@ Examples:
           query,
           queryIntent,
           searchKeywords,
-          isChinese // 传递语言信息
+          userLanguage === 'zh' // 传递语言信息（中文/非中文）
         );
         result.semanticScore = semanticScore;
         result.finalScore = semanticScore; // 使用语义分数作为最终分数

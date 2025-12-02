@@ -73,7 +73,7 @@ const VehicleSelector: React.FC<VehicleSelectorProps> = ({ vehicleData, onSelect
     <div className="space-y-6">
       {/* Selector title */}
       <div className="text-center">
-        <Car className="h-8 w-8 text-blue-400 mx-auto mb-2" />
+        <Car className="h-8 w-8 text-primary-200 mx-auto mb-2" />
         <h3 className="text-lg font-medium text-white">{t('vehicleSelector.title')}</h3>
         <p className="text-sm text-gray-300">{t('vehicleSelector.subtitle')}</p>
       </div>
@@ -189,11 +189,11 @@ const VehicleSelector: React.FC<VehicleSelectorProps> = ({ vehicleData, onSelect
           <div className="flex items-center justify-between">
             <div>
               <h4 className="font-medium text-white">{t('vehicleSelector.selectedVehicle')}</h4>
-              <p className="text-blue-300">
+              <p className="text-primary-200">
                 {selectedBrand} {selectedModel} ({selectedYear})
               </p>
             </div>
-            <Button onClick={handleConfirm} className="bg-blue-600 hover:bg-blue-700">
+            <Button onClick={handleConfirm} className="bg-primary-600 hover:bg-primary-500">
               {t('vehicleSelector.confirm')}
             </Button>
           </div>

@@ -5,10 +5,11 @@
 
 export interface ContactInfo {
   id: string
-  type: 'email' | 'phone' | 'address' | 'online' | 'forum' | 'whatsapp'
+  type: 'email' | 'phone' | 'whatsapp' | 'telegram' | 'vk' | 'youtube'
   label: string
   value: string
   icon: string
+  qrCode?: string // 二维码图片URL
   isActive: boolean
   order: number
 }

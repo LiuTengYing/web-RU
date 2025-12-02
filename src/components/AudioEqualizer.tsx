@@ -661,7 +661,7 @@ const AudioEqualizer: React.FC = () => {
            <Card>
              <CardHeader>
                <CardTitle className="text-lg">
-                 37段均衡器 (全频段)
+                 {t('audioEqualizer.eqBands.37')}
                </CardTitle>
              </CardHeader>
             <CardContent>

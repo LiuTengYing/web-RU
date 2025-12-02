@@ -37,9 +37,14 @@ const generateSessionId = (req: express.Request, res: express.Response, next: ex
  */
 router.post('/login', generateSessionId, async (req, res) => {
   try {
+    console.log('🔐 收到登录请求')
+    console.log('🔐 req.body:', JSON.stringify(req.body))
+    console.log('🔐 req.headers:', JSON.stringify(req.headers))
+    
     const { password } = req.body
     
     if (!password) {
+      console.log('🔐 密码为空')
       return res.status(400).json({
         success: false,
         error: '请输入密码'

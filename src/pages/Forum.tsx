@@ -9,7 +9,7 @@ const Forum = () => {
   }, [])
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-950 text-white">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 text-white">
       <p className="text-lg">{t('common.redirecting')}</p>
     </div>
   )

@@ -26,13 +26,13 @@ export const AccordionItem: React.FC<AccordionItemProps> = ({
       >
         <div className="flex items-center space-x-3">
           {icon && (
-            <div className="flex-shrink-0 text-blue-400">
+            <div className="flex-shrink-0 text-primary-300">
               {icon}
             </div>
           )}
           <h3 className="text-xl font-bold text-white text-left">{title}</h3>
           {badge && (
-            <span className="px-3 py-1 text-sm font-medium rounded-full bg-blue-600/20 text-blue-300 border border-blue-500/30">
+            <span className="px-3 py-1 text-sm font-medium rounded-full bg-primary-500/15 text-primary-200 border border-primary-500/30">
               {badge}
             </span>
           )}

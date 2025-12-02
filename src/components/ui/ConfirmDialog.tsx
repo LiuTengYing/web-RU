@@ -35,7 +35,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       case 'warning':
         return <AlertTriangle className="h-6 w-6 text-yellow-500" />;
       case 'info':
-        return <AlertTriangle className="h-6 w-6 text-blue-500" />;
+        return <AlertTriangle className="h-6 w-6 text-primary-500" />;
     }
   };
 
@@ -46,7 +46,7 @@ const ConfirmDialog: React.FC<ConfirmDialogProps> = ({
       case 'warning':
         return 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500';
       case 'info':
-        return 'bg-blue-600 hover:bg-blue-700 focus:ring-blue-500';
+        return 'bg-primary-600 hover:bg-primary-700 focus:ring-primary-500';
     }
   };
 

@@ -18,15 +18,15 @@ const timeZones: TimeZone[] = [
     businessHours: { start: 9, end: 18 }
   },
   {
-    name: 'US Eastern',
-    timezone: 'America/New_York',
-    flag: '🇺🇸',
-    businessHours: { start: 9, end: 17 }
+    name: 'Russia Moscow',
+    timezone: 'Europe/Moscow',
+    flag: '🇷🇺',
+    businessHours: { start: 9, end: 18 }
   },
   {
-    name: 'US Pacific',
-    timezone: 'America/Los_Angeles', 
-    flag: '🇺🇸',
+    name: 'Europe Central',
+    timezone: 'Europe/Berlin',
+    flag: '🇪🇺',
     businessHours: { start: 9, end: 17 }
   }
 ]
@@ -107,7 +107,7 @@ const WorldTimeDisplay: React.FC<WorldTimeDisplayProps> = ({
     <Card className={`bg-gradient-to-br from-gray-800/50 to-gray-700/50 border border-gray-600/50 backdrop-blur-sm ${className}`}>
       <CardContent className="p-6">
         <div className="flex items-center mb-4">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center mr-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-primary-500 to-emerald-500 rounded-lg flex items-center justify-center mr-3">
             <Globe className="h-5 w-5 text-white" />
           </div>
           <div>
@@ -141,7 +141,9 @@ const WorldTimeDisplay: React.FC<WorldTimeDisplayProps> = ({
                   <div>
                     <div className="flex items-center space-x-2">
                       <span className="text-white font-medium">
-                        {t(`contact.time.zones.${tz.name.toLowerCase().replace(' ', '')}`)}
+                        {tz.name === 'China' && t('contact.time.zones.china')}
+                        {tz.name === 'Russia Moscow' && t('contact.time.zones.russia')}
+                        {tz.name === 'Europe Central' && t('contact.time.zones.europe')}
                       </span>
                       {status && showBusinessHours && (
                         <div className="flex items-center space-x-1">
@@ -177,9 +179,9 @@ const WorldTimeDisplay: React.FC<WorldTimeDisplayProps> = ({
 
         {/* 客服状态总览 */}
         {showBusinessHours && (
-          <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-blue-900/20 to-purple-900/20 border border-blue-800/30">
+          <div className="mt-6 p-4 rounded-xl bg-gradient-to-r from-primary-900/20 to-emerald-900/20 border border-primary-800/30">
             <div className="flex items-center space-x-3">
-              <Users className="h-5 w-5 text-blue-400" />
+              <Users className="h-5 w-5 text-primary-200" />
               <div>
                 <h4 className="text-white font-medium">{t('contact.time.customerService')}</h4>
                 <p className="text-sm text-gray-300">

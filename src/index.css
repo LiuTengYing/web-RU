@@ -27,6 +27,14 @@
   animation: fade-in 1s ease-out;
 }
 
+.animate-fade-in-delay {
+  animation: fade-in 1s ease-out 0.3s backwards;
+}
+
+.animate-fade-in-delay-2 {
+  animation: fade-in 1s ease-out 0.6s backwards;
+}
+
 .animate-bounce-slow {
   animation: bounce-slow 2s ease-in-out infinite;
 }
@@ -53,16 +61,16 @@
   
   /* 深色模式样式 */
   .dark body {
-    @apply bg-gray-900 text-white;
+    @apply bg-slate-900 text-white;
   }
   
   /* 深色模式主容器样式 */
   .dark .min-h-screen {
-    @apply bg-gray-900;
+    @apply bg-slate-900;
   }
   
   .dark .bg-gray-50 {
-    @apply bg-gray-900;
+    @apply bg-slate-900;
   }
   
   /* 护眼模式样式 */
@@ -97,31 +105,31 @@
 /* 深色模式全局样式 */
 .dark {
   /* 基础背景和文字 */
-  --bg-primary: #111827;    /* gray-900 */
-  --bg-secondary: #1f2937;  /* gray-800 */
-  --bg-tertiary: #374151;   /* gray-700 */
+  --bg-primary: #0f172a;    /* slate-900 */
+  --bg-secondary: #1e293b;  /* slate-800 */
+  --bg-tertiary: #334155;   /* slate-700 */
   --text-primary: #ffffff;  /* white */
-  --text-secondary: #e5e7eb; /* gray-200 */
-  --text-tertiary: #d1d5db;  /* gray-300 */
-  --border-primary: #4b5563; /* gray-600 */
-  --border-secondary: #6b7280; /* gray-500 */
+  --text-secondary: #f1f5f9; /* slate-100 */
+  --text-tertiary: #e2e8f0;  /* slate-200 */
+  --border-primary: #475569; /* slate-600 */
+  --border-secondary: #64748b; /* slate-500 */
 }
 
 /* 深色模式背景样式 */
 .dark body {
-  @apply bg-gray-900 text-white;
+  @apply bg-slate-900 text-white;
 }
 
 .dark .min-h-screen {
-  @apply bg-gray-900;
+  @apply bg-slate-900;
 }
 
 .dark .bg-gray-50 {
-  @apply bg-gray-900;
+  @apply bg-slate-900;
 }
 
 .dark .bg-white {
-  @apply bg-gray-800;
+  @apply bg-slate-800;
 }
 
 /* 深色模式文字样式 */
@@ -135,7 +143,7 @@
 }
 
 .dark p {
-  @apply text-gray-200;
+  @apply text-slate-100;
 }
 
 .dark .text-gray-900 {

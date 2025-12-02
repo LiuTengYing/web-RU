@@ -36,7 +36,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
         'hover:scale-105 hover:bg-white/15 hover:border-white/30',
         // 七彩炫光边框动画
         'before:absolute before:inset-0 before:rounded-xl before:p-[2px]',
-        'before:bg-gradient-to-r before:from-purple-500 before:via-blue-500 before:to-green-500',
+        'before:bg-gradient-to-r before:from-primary-500 before:via-accent-warm before:to-primary-300',
         'before:bg-[length:200%_200%] before:animate-gradient-xy',
         'before:opacity-0 hover:before:opacity-70 before:transition-opacity before:duration-300',
         'before:-z-10',

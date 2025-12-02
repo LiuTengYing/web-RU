@@ -91,7 +91,7 @@ const SoftwareDownloads: React.FC = () => {
     : software.filter(s => s.categoryId._id === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-900">
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* 页面标题 - 优化版 */}
         <div className="text-center mb-16">
@@ -106,7 +106,7 @@ const SoftwareDownloads: React.FC = () => {
             onClick={() => handleCategoryChange('all')}
             className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
               selectedCategory === 'all'
-                ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 scale-105'
+                ? 'bg-gradient-to-r from-primary-500 to-emerald-500 text-white shadow-lg shadow-primary-500/30 scale-105'
                 : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700'
             }`}
           >
@@ -118,7 +118,7 @@ const SoftwareDownloads: React.FC = () => {
               onClick={() => handleCategoryChange(category._id)}
               className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                 selectedCategory === category._id
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30 scale-105'
+                  ? 'bg-gradient-to-r from-primary-500 to-emerald-500 text-white shadow-lg shadow-primary-500/30 scale-105'
                   : 'bg-gray-800/50 text-gray-300 hover:bg-gray-700/50 border border-gray-700'
               }`}
             >
@@ -131,8 +131,8 @@ const SoftwareDownloads: React.FC = () => {
         {loading ? (
           <div className="text-center py-20">
             <div className="relative inline-block">
-              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
-              <div className="absolute inset-0 rounded-full border-2 border-blue-500/20"></div>
+              <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary-400"></div>
+              <div className="absolute inset-0 rounded-full border-2 border-primary-400/20"></div>
             </div>
             <p className="text-gray-400 mt-6 text-lg">{t('common.loading')}</p>
           </div>
@@ -141,19 +141,19 @@ const SoftwareDownloads: React.FC = () => {
             {filteredSoftware.map((item, index) => (
               <div
                 key={item._id}
-                className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-blue-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-blue-500/20 hover:-translate-y-2"
+                className="group relative bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm rounded-2xl border border-gray-700/50 hover:border-primary-400/60 transition-all duration-500 hover:shadow-2xl hover:shadow-primary-500/20 hover:-translate-y-2"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
                 {/* 渐变光晕效果 */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/0 via-purple-600/0 to-pink-600/0 group-hover:from-blue-600/10 group-hover:via-purple-600/10 group-hover:to-pink-600/10 rounded-2xl transition-all duration-500"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 via-emerald-500/0 to-accent-warm/0 group-hover:from-primary-500/15 group-hover:via-emerald-500/15 group-hover:to-accent-warm/10 rounded-2xl transition-all duration-500"></div>
                 
                 <div className="relative p-7">
                   {/* 标题和分类标签 */}
                   <div className="mb-5">
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors duration-300">
+                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-primary-200 transition-colors duration-300">
                       {item.name}
                     </h3>
-                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 text-blue-300 text-sm font-medium rounded-full">
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-gradient-to-r from-primary-500/20 to-emerald-500/20 border border-primary-400/30 text-primary-200 text-sm font-medium rounded-full">
                       <Download className="h-3.5 w-3.5" />
                       {item.categoryId.name}
                     </span>
@@ -176,7 +176,7 @@ const SoftwareDownloads: React.FC = () => {
                   <div className="flex gap-3">
                     <button
                       onClick={() => handleDownload(item)}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white font-medium rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-105"
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-white font-medium rounded-xl transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-105"
                     >
                       <Download className="h-4 w-4" />
                       {t('softwareDownloads.download')}
@@ -219,7 +219,7 @@ const SoftwareDownloads: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {/* 弹窗头部 */}
-            <div className="relative p-8 border-b border-gray-700/50 bg-gradient-to-r from-blue-600/10 to-purple-600/10">
+            <div className="relative p-8 border-b border-gray-700/50 bg-gradient-to-r from-primary-500/10 to-emerald-500/10">
               <button
                 onClick={handleCloseDetails}
                 className="absolute top-6 right-6 p-2 rounded-full bg-gray-700/50 hover:bg-gray-600/50 text-gray-400 hover:text-white transition-all duration-300 hover:rotate-90"
@@ -230,7 +230,7 @@ const SoftwareDownloads: React.FC = () => {
               <h2 className="text-3xl font-bold text-white mb-4 pr-12">
                 {selectedSoftware.name}
               </h2>
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600/30 to-purple-600/30 border border-blue-500/40 text-blue-300 text-sm font-medium rounded-full">
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary-500/30 to-emerald-500/30 border border-primary-400/40 text-primary-200 text-sm font-medium rounded-full">
                 <Download className="h-4 w-4" />
                 {selectedSoftware.categoryId.name}
               </span>
@@ -242,7 +242,7 @@ const SoftwareDownloads: React.FC = () => {
                 {/* 软件描述 */}
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                    <div className="w-1 h-6 bg-gradient-to-b from-blue-500 to-purple-500 rounded-full"></div>
+                    <div className="w-1 h-6 bg-gradient-to-b from-primary-400 to-emerald-400 rounded-full"></div>
                     {t('softwareDownloads.softwareDescription')}
                   </h3>
                   <p className="text-gray-300 leading-relaxed text-lg pl-4">
@@ -272,7 +272,7 @@ const SoftwareDownloads: React.FC = () => {
               <div className="flex gap-4">
                 <button
                   onClick={() => handleDownload(selectedSoftware)}
-                  className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-[1.02]"
+                  className="flex-1 flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r from-primary-500 to-emerald-500 hover:from-primary-400 hover:to-primary-500 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-primary-500/30 hover:shadow-primary-500/50 hover:scale-[1.02]"
                 >
                   <Download className="h-5 w-5" />
                   {t('softwareDownloads.download')}

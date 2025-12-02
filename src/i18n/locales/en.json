@@ -84,11 +84,21 @@
     "description": "We provide comprehensive technical documentation for vehicle compatibility, installation guides, and professional support services.",
     "professionalSolutions": "Professional Solutions",
     "exploreLibrary": "Explore our knowledge library",
+    "hero": {
+      "title": "Professional Auto Security System",
+      "subtitle": "Comprehensive safety protection for your vehicle"
+    },
     "buttons": {
       "enterKnowledge": "Enter Knowledge Base",
       "learnMore": "Learn More"
     },
     "features": {
+      "professional": "Professional Quality",
+      "professionalDesc": "Years of industry experience with professional technical team",
+      "reliable": "Reliable and Stable",
+      "reliableDesc": "Rigorously tested for stable and reliable operation",
+      "innovative": "Continuous Innovation",
+      "innovativeDesc": "Constantly updating technology, leading industry development",
       "professionalInstallation": "Professional Installation",
       "reliableSupport": "Reliable Support",
       "wideCoverage": "Wide Coverage"
@@ -129,10 +139,18 @@
       "userRecommended": "User Recommended"
     },
     "cta": {
-      "exploreNow": "Explore Now",
-      "contactUs": "Contact Us"
+      "exploreKnowledge": "Explore Knowledge Base",
+      "contactUs": "Contact Us",
+      "exploreNow": "Explore Now"
     },
     "stats": {
+      "title": "Platform Data Overview",
+      "subtitle": "Real-time platform operation data",
+      "documents": "Technical Documents",
+      "users": "Registered Users",
+      "views": "Total Views",
+      "downloads": "Downloads",
+      "thisMonth": "This Month",
       "vehicleModels": "Vehicle Models",
       "coveringMajorBrands": "Covering major brands",
       "technicalDocuments": "Technical Documents",
@@ -151,7 +169,84 @@
     "playHere": "Play here",
     "videoUnavailable": "Video temporarily unavailable",
     "openInNewWindow": "Open in new window",
-    "browserNotSupported": "Your browser does not support video playback"
+    "browserNotSupported": "Your browser does not support video playback",
+    "modules": {
+      "title": "Function Modules",
+      "subtitle": "Explore our core features",
+      "knowledgeBase": {
+        "title": "Knowledge Base",
+        "description": "Vehicle technical documentation and compatibility information",
+        "documentsCount": "Documents",
+        "browse": "Browse Knowledge Base",
+        "search": "Search Documents"
+      },
+      "products": {
+        "title": "Product Showcase",
+        "description": "Browse our product portfolio",
+        "productsCount": "Products",
+        "browse": "Browse Products",
+        "categories": "Product Categories"
+      },
+      "cases": {
+        "title": "Case Studies",
+        "description": "Success stories and practical applications",
+        "casesCount": "Cases",
+        "browse": "Browse Cases"
+      },
+      "news": {
+        "title": "News & Updates",
+        "description": "Latest industry news and company updates",
+        "newsCount": "News",
+        "browse": "Browse News",
+        "latest": "Latest Updates"
+      },
+      "services": {
+        "title": "Service Center",
+        "description": "Professional technical support and services",
+        "servicesCount": "Services",
+        "browse": "Browse Services",
+        "contact": "Contact Us"
+      },
+      "about": {
+        "title": "About Us",
+        "description": "Company introduction and corporate culture",
+        "pagesCount": "Pages",
+        "browse": "Learn More"
+      },
+      "software": {
+        "title": "Software Downloads",
+        "description": "Download related software and tools",
+        "downloadsCount": "Downloads",
+        "browse": "Browse Downloads"
+      },
+      "forum": {
+        "title": "Community Forum",
+        "description": "Communicate and discuss with other users",
+        "postsCount": "Posts",
+        "browse": "Browse Forum",
+        "post": "Create Post"
+      },
+      "admin": {
+        "title": "Admin Panel",
+        "description": "System management and configuration",
+        "panel": "Admin Panel",
+        "users": "User Management",
+        "config": "System Configuration"
+      },
+      "analytics": {
+        "title": "Data Analytics",
+        "description": "View system data and statistics",
+        "view": "View Analytics"
+      }
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "subtitle": "Quick access to frequently used functions",
+      "search": "Search",
+      "contact": "Contact",
+      "download": "Download",
+      "forum": "Forum"
+    }
   },
   "knowledge": {
     "title": "Vehicle Technical Knowledge Base",
@@ -431,8 +526,16 @@
       "response": "Response Time",
       "forum": "Forum",
       "whatsapp": "WhatsApp",
+      "telegram": "Telegram",
+      "vk": "VK",
+      "youtube": "YouTube",
       "clickToEnter": "Click to enter forum",
-      "clickToChat": "Click to start chat"
+      "clickToChat": "Click to start chat",
+      "clickToOpen": "Click to open",
+      "openTelegram": "Open Telegram",
+      "viewQRCode": "View QR Code",
+      "scanQRCode": "Scan this QR code with Telegram to add contact",
+      "selectContactMethod": "Select contact method"
     },
     "time": {
       "worldTime": "World Time",
@@ -540,9 +643,35 @@
     "title": "Admin Console",
     "description": "Manage vehicles, documents and system settings",
     "logout": "Logout",
+    "configManager": "System Configuration Manager",
+    "configManagerDescription": "Manage system modules, storage, and content configuration",
+    "common": {
+      "loadFailed": "Failed to load",
+      "createSuccess": "Created successfully",
+      "createFailed": "Failed to create",
+      "updateSuccess": "Updated successfully",
+      "updateFailed": "Failed to update",
+      "deleteSuccess": "Deleted successfully",
+      "deleteFailed": "Failed to delete"
+    },
+    "content": {
+      "create": "Create Content",
+      "edit": "Edit Content",
+      "createNews": "Create News",
+      "editNews": "Edit News",
+      "createAbout": "Create About Us",
+      "editAbout": "Edit About Us",
+      "createProduct": "Create Product",
+      "editProduct": "Edit Product",
+      "createService": "Create Service",
+      "editService": "Edit Service",
+      "createCase": "Create Case",
+      "editCase": "Edit Case"
+    },
     "tabs": {
       "vehicles": "Vehicles",
       "documents": "Documents",
+      "config": "System Configuration",
       "categories": "Categories",
       "contact": "Contact",
       "forms": "Forms",
@@ -559,7 +688,17 @@
       "systemMonitor": "System Monitor",
       "systemConfig": "Third-party Config",
       "siteImages": "Site Images",
-      "categoriesManagement": "Categories Management"
+      "categoriesManagement": "Categories Management",
+      "news": "News Management",
+      "newsDescription": "Manage website news and updates",
+      "about": "About Us",
+      "aboutDescription": "Manage about us page content",
+      "products": "Products Management",
+      "productsDescription": "Manage product showcase content",
+      "services": "Services Management",
+      "servicesDescription": "Manage service introduction content",
+      "cases": "Cases Management",
+      "casesDescription": "Manage case showcase content"
     },
     "feedbackManagement": {
       "title": "Feedback Management",
@@ -1333,12 +1472,23 @@
     "en": "English"
   },
   "navigation": {
-    "dashboard": "Dashboard",
-    "knowledge": "Knowledge Base",
-    "forum": "Forum",
-    "softwareDownloads": "Downloads",
+    "home": "Home",
+    "solutions": "Solutions",
+    "products": "Products",
+    "services": "Services",
+    "cases": "Case Studies",
+    "resources": "Resources",
+    "knowledgeBase": "Knowledge Base",
+    "community": "Community",
+    "downloads": "Downloads",
+    "tools": "Tools",
     "audioEqualizer": "Audio Equalizer",
-    "contact": "Contact Us"
+    "news": "News",
+    "about": "About Us",
+    "contact": "Contact",
+    "support": "Support",
+    "helpCenter": "Help Center",
+    "feedback": "Feedback"
   },
   "layout": {
     "logo": "AutomotiveHu",
@@ -1352,7 +1502,7 @@
       "viewOnMaps": "View on Maps",
       "contactInfo": "Contact Information",
       "quickLinks": "Quick Links",
-      "address": "Qifu Road, Baiyun District, Guangzhou, Guangdong Province",
+      "address": "No. 9 Hepan Road, Tangxia Town, Dongguan City, Guangdong Province",
       "tagline": "Professional Automotive Electronics Technical Support",
       "coordinates": "Coordinates",
       "privacy": "Privacy Policy",
@@ -1571,6 +1721,7 @@
       "10": "10-band (Standard)",
       "16": "16-band (Enhanced)",
       "31": "31-band (Professional)",
+      "37": "37-band Equalizer (Full Range)",
       "custom": "36-band (Full Range)"
     },
     "tips": {
@@ -1591,6 +1742,59 @@
       "simpleTestErrorDesc": "Failed to start simple test audio",
       "presetSaved": "Preset Saved",
       "presetSavedDesc": "Current settings have been saved as a preset"
+    }
+  },
+  "audioGenerator": {
+    "title": "High-Quality Audio File Generator",
+    "description": "This tool can generate high-quality audio files for audio equalizer testing. Generated audio files are more natural and pleasant than real-time generated audio.",
+    "audioTypes": {
+      "piano": "Piano Music",
+      "pianoDesc": "20-second looped piano music with natural piano tone and vibrato effects",
+      "pop": "Pop Music",
+      "popDesc": "16-second looped pop music with drums, bassline and chord accompaniment",
+      "jazz": "Jazz Music",
+      "jazzDesc": "20-second looped jazz music with saxophone tone and swing rhythm",
+      "guitar": "Guitar Test",
+      "guitarDesc": "12-second looped guitar string test audio with guitar-specific harmonic structure",
+      "frequency": "Frequency Test",
+      "frequencyDesc": "15-second looped multi-frequency test audio for audio system testing",
+      "all": "Generate All",
+      "allDesc": "Generate all types of audio files at once"
+    },
+    "buttons": {
+      "generate": "Generate {{type}}",
+      "generateAll": "Generate All",
+      "generating": "Generating..."
+    },
+    "messages": {
+      "success": "Audio Files Generated",
+      "successDesc": "All audio files have been generated and download started",
+      "singleSuccessDesc": "{{type}} audio file has been generated and download started",
+      "error": "Generation Failed",
+      "errorDesc": "An error occurred during audio file generation"
+    },
+    "generatedFiles": {
+      "title": "Generated Files",
+      "successMessage": "Audio files generated successfully! Please place the downloaded files in",
+      "directory": "public/audio/",
+      "usageHint": "directory, then use them in the audio equalizer."
+    },
+    "instructions": {
+      "title": "Instructions",
+      "step1Title": "Step 1: Generate Audio Files",
+      "step1Desc": "Click the buttons above to generate audio files, which will be automatically downloaded to your downloads directory.",
+      "step2Title": "Step 2: Place Audio Files",
+      "step2Desc": "Move the downloaded audio files to the project's",
+      "step2Directory": "public/audio/",
+      "step2Suffix": "directory.",
+      "step3Title": "Step 3: Use in Equalizer",
+      "step3Desc": "Modify the audio equalizer component to use these real audio files instead of real-time generated audio.",
+      "featuresTitle": "Audio File Features",
+      "feature1": "High-quality WAV format, 44.1kHz sample rate",
+      "feature2": "Stereo output, suitable for audio testing",
+      "feature3": "Looped playback, suitable for equalizer adjustment",
+      "feature4": "Natural tone and rhythm",
+      "feature5": "Rich frequency content"
     }
   },
   "articles": {
@@ -1718,6 +1922,11 @@
       "viewMore": "View {{count}} more related content →"
     },
     "config": {
+      "tabs": {
+        "modules": "Module Configuration",
+        "storage": "Storage Configuration",
+        "content": "Content Management"
+      },
       "title": "AI Assistant Configuration",
       "description": "Configure AI provider API and assistant behavior parameters",
       "apiConfig": "API Configuration",
@@ -2007,5 +2216,49 @@
     "min": "{{field}} cannot be less than {{min}}",
     "max": "{{field}} cannot be greater than {{max}}",
     "pattern": "{{field}} format is incorrect"
+  },
+  "pages": {
+    "services": "Services",
+    "servicesDescription": "Professional technical support and services",
+    "products": "Products",
+    "productsDescription": "Browse our product catalog",
+    "news": "News",
+    "newsDescription": "Latest industry news and company updates",
+    "cases": "Case Studies",
+    "casesDescription": "Success stories and real-world applications",
+    "about": "About Us",
+    "aboutDescription": "Learn about our team and mission",
+    "noNews": "No news available",
+    "noProducts": "No products available",
+    "noServices": "No services available",
+    "noCases": "No case studies available",
+    "aboutUnderConstruction": "About Us page is under construction",
+    "stayTunedNews": "Stay tuned for the latest updates",
+    "stayTunedProducts": "Stay tuned for more product releases",
+    "stayTunedServices": "Stay tuned for more service offerings",
+    "stayTunedCases": "Stay tuned for more success stories"
+  },
+  "aboutPage": {
+    "defaultTitle": "About Us",
+    "defaultSubtitle": "Focused on automotive electronics innovation, providing professional solutions",
+    "contactUs": "Contact Us",
+    "learnMore": "Learn More",
+    "coreValuesTitle": "Our Core Values",
+    "coreValuesSubtitle": "Upholding principles, pursuing excellence",
+    "customerFirst": "Customer First",
+    "customerFirstDesc": "Always prioritizing customer needs, delivering service beyond expectations",
+    "innovation": "Innovation Driven",
+    "innovationDesc": "Continuous technological innovation, leading industry development, creating greater value",
+    "quality": "Quality Assurance",
+    "qualityDesc": "Strict quality management system ensuring high standards for every product and service",
+    "yearsExperience": "Years of Experience",
+    "clients": "Partner Clients",
+    "successCases": "Success Cases",
+    "teamMembers": "Professional Team",
+    "milestoneTitle": "Our Journey",
+    "milestoneSubtitle": "Constant innovation, continuous growth",
+    "ctaTitle": "Let's Create More Possibilities Together",
+    "ctaSubtitle": "Contact us to explore collaboration opportunities",
+    "contactNow": "Contact Us Now"
   }
 } 

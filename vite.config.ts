@@ -15,19 +15,21 @@ export default defineConfig({
     },
   },
   server: {
-    port: 5173,
-    host: '0.0.0.0', // 允许 Laragon 代理访问
+    port: 3001,
+    host: 'localhost',
     open: false, // 关闭自动打开，使用 Laragon 的域名
     cors: true,
-    strictPort: true, // 强制使用指定端口，如果被占用则报错而不是换端口
+    strictPort: true, // 如果 3001 被占用则报错，不自动改端口
     hmr: {
       overlay: true,
-      port: 5173
+      host: 'localhost',
+      port: 3001,
+      protocol: 'ws'
     },
     proxy: {
       // 将前端 /api 请求代理到后端 3003，避免开发期 CORS/404
       '/api': {
-        target: 'http://localhost:3003',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         secure: false
       }

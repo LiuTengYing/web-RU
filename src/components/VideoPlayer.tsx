@@ -123,15 +123,15 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({ document, onBack }) => {
                     onClick={() => setCurrentVideoIndex(index)}
                     className={`text-left p-4 rounded-lg border transition-all ${
                       currentVideoIndex === index
-                        ? 'bg-blue-600/20 border-blue-500 shadow-lg shadow-blue-500/20'
+                        ? 'bg-primary-500/20 border-primary-400 shadow-lg shadow-primary-500/20'
                         : 'bg-gray-800/50 border-gray-600/50 hover:bg-gray-700/50 hover:border-gray-500'
                     }`}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-1">
-                          <Play className={`h-4 w-4 ${currentVideoIndex === index ? 'text-blue-400' : 'text-gray-400'}`} />
-                          <span className={`font-medium ${currentVideoIndex === index ? 'text-blue-300' : 'text-gray-300'}`}>
+                          <Play className={`h-4 w-4 ${currentVideoIndex === index ? 'text-primary-200' : 'text-gray-400'}`} />
+                          <span className={`font-medium ${currentVideoIndex === index ? 'text-primary-200' : 'text-gray-300'}`}>
                             {video.title || `${t('admin.video.videoItem')} ${index + 1}`}
                           </span>
                         </div>

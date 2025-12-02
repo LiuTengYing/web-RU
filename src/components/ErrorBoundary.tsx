@@ -25,8 +25,8 @@ class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundarySta
     if (this.props.onError) {
       this.props.onError(error, info)
     }
-    // 这里可接入监控上报
-    // console.error('App ErrorBoundary:', error, info)
+    // 输出详细错误信息用于调试
+    console.error('App ErrorBoundary:', error, info)
   }
 
   render() {

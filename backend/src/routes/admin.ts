@@ -4,6 +4,8 @@ import {
   updateAdminSettings, 
   verifyAdminPassword 
 } from '../services/adminSettingsService';
+import User from '../models/User';
+import DocumentView from '../models/DocumentView';
 
 const router = express.Router();
 
@@ -65,6 +67,34 @@ router.post('/verify', async (req: Request, res: Response) => {
     res.status(500).json({ 
       success: false, 
       error: error instanceof Error ? error.message : '验证失败' 
+    });
+  }
+});
+
+// 获取用户统计
+router.get('/users/stats', async (req: Request, res: Response) => {
+  try {
+    const total = await User.countDocuments();
+    res.json({ success: true, data: { total } });
+  } catch (error) {
+    console.error('获取用户统计失败:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : '获取统计失败' 
+    });
+  }
+});
+
+// 获取访问统计
+router.get('/analytics/views', async (req: Request, res: Response) => {
+  try {
+    const total = await DocumentView.countDocuments();
+    res.json({ success: true, data: { total } });
+  } catch (error) {
+    console.error('获取访问统计失败:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error instanceof Error ? error.message : '获取统计失败' 
     });
   }
 });

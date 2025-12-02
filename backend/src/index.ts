@@ -29,9 +29,8 @@ import './models/SystemConfig';
 import announcementRouter from './routes/announcement';
 import vehiclesRouter from './routes/vehicles';
 import systemConfigRouter from './routes/systemConfig';
-import otaReportsRouter from './routes/otaReports';
 import siteImagesRouter from './routes/siteImages';
-import ossFileManagerRouter from './routes/ossFileManager';
+import apiRoutes from './routes/index';
 import systemConfigService from './services/systemConfigService';
 import cleanupJob from './jobs/cleanupJob';
 import { globalErrorHandler, handleNotFound } from './middleware/errorHandler';
@@ -148,7 +147,7 @@ app.get('/', (req, res) => {
   });
 });
 
-// API路由
+// 旧版API路由（向后兼容） - 必须在 app.use('/api', apiRoutes) 之前
 app.use('/api/upload', uploadRouter);
 app.use('/api/ai', aiRouter);
 app.use('/api/documents', documentsRouter);
@@ -170,9 +169,10 @@ app.use('/api/site-settings', siteSettingsRouter);
 app.use('/api/categories', categoryRouter);
 app.use('/api/announcement', announcementRouter);
 app.use('/api/system-config', systemConfigRouter);
-app.use('/api', otaReportsRouter);
 app.use('/api', siteImagesRouter);
-app.use('/api/oss-files', ossFileManagerRouter);
+
+// API路由 - V1版本路由（作为fallback，在所有其他路由之后）
+app.use('/api', apiRoutes);
 
 // 404处理 - 必须在所有路由之后，错误处理之前
 app.use(handleNotFound);

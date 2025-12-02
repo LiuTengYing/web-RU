@@ -14,11 +14,11 @@ const NotFound: React.FC = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-slate-950 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <Card className="bg-gray-800 border-gray-700">
           <CardContent className="text-center py-12">
-            <div className="text-6xl font-bold text-blue-400 mb-4">404</div>
+            <div className="text-6xl font-bold text-primary-300 mb-4">404</div>
             <h1 className="text-2xl font-bold text-white mb-4">
               {t('errors.notFound')}
             </h1>
@@ -28,7 +28,7 @@ const NotFound: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={() => navigate('/')}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-500 hover:to-blue-600"
+                className="bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-400 hover:to-primary-500"
               >
                 <Home className="h-4 w-4 mr-2" />
                 {t('common.back', { defaultMessage: '返回首页' })}

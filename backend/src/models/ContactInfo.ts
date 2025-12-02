@@ -1,10 +1,11 @@
 import mongoose, { Document, Schema } from 'mongoose'
 
 export interface IContactInfo extends Document {
-  type: 'email' | 'phone' | 'address' | 'online' | 'forum' | 'whatsapp'
+  type: 'email' | 'phone' | 'whatsapp' | 'telegram' | 'vk' | 'youtube'
   label: string
   value: string
   icon: string
+  qrCode?: string // 二维码图片URL
   isActive: boolean
   order: number
   createdAt: Date
@@ -14,7 +15,7 @@ export interface IContactInfo extends Document {
 const contactInfoSchema = new Schema<IContactInfo>({
   type: {
     type: String,
-    enum: ['email', 'phone', 'address', 'online', 'forum', 'whatsapp'],
+    enum: ['email', 'phone', 'whatsapp', 'telegram', 'vk', 'youtube'],
     required: true
   },
   label: {
@@ -30,6 +31,10 @@ const contactInfoSchema = new Schema<IContactInfo>({
   icon: {
     type: String,
     required: true,
+    trim: true
+  },
+  qrCode: {
+    type: String,
     trim: true
   },
   isActive: {

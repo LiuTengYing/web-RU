@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Mail, Phone, MapPin, MessageSquare, Send, CheckCircle, AlertCircle, ArrowRight, Users, Clock, ExternalLink, MessageCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, MessageSquare, Send, CheckCircle, AlertCircle, ArrowRight, Users, Clock, ExternalLink, MessageCircle, Video, Share2, X } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -13,7 +13,10 @@ const iconMap: { [key: string]: React.ComponentType<any> } = {
   Phone,
   MapPin,
   MessageSquare,
-  MessageCircle
+  MessageCircle,
+  Send, // Telegram
+  Share2, // VK
+  Video // YouTube
 }
 
 // 表单验证接口
@@ -76,6 +79,7 @@ const Contact: React.FC = () => {
   // 表单验证错误
   const [formErrors, setFormErrors] = useState<FormErrors>({})
   const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set())
+  const [showQRCode, setShowQRCode] = useState<string | null>(null) // 显示二维码的联系信息ID
 
   // 加载联系信息
   useEffect(() => {
@@ -187,12 +191,12 @@ const Contact: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-900">
       <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="space-y-8">
           {/* 页面标题 */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-medium mb-6 shadow-lg">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary-500 to-emerald-500 text-white text-sm font-medium mb-6 shadow-lg">
               <MessageSquare className="h-5 w-5 mr-2" />
               {t('contact.title')}
             </div>
@@ -222,48 +226,123 @@ const Contact: React.FC = () => {
                 {contactInfo.length > 0 ? (
                   contactInfo.map((info) => {
                     const IconComponent = iconMap[info.icon]
-                    const getLabel = (type: string) => {
+                    
+                    // 生成跳转链接
+                    const getContactLink = (type: string, value: string) => {
                       switch (type) {
                         case 'email':
-                          return t('contact.info.email')
-                        case 'phone':
-                          return t('contact.info.phone')
-                        case 'address':
-                          return t('contact.info.address')
-                        case 'online':
-                          return t('contact.info.hours')
-                        case 'forum':
-                          return t('contact.info.forum')
+                          return `mailto:${value}`
                         case 'whatsapp':
-                          return t('contact.info.whatsapp')
+                          const cleanNumber = value.replace(/[^\d+]/g, '')
+                          return `https://wa.me/${cleanNumber}`
+                        case 'telegram':
+                          if (value.startsWith('http')) return value
+                          if (value.startsWith('t.me/')) return `https://${value}`
+                          if (value.startsWith('@')) return `https://t.me/${value.slice(1)}`
+                          return `https://t.me/${value}`
+                        case 'vk':
+                          if (value.startsWith('http')) return value
+                          if (value.startsWith('vk.com/')) return `https://${value}`
+                          return `https://vk.com/${value}`
+                        case 'youtube':
+                          if (value.startsWith('http')) return value
+                          return `https://${value}`
                         default:
-                          return info.label
+                          return null
                       }
                     }
-                    return (
-                      <div 
-                        key={info.id} 
-                        className={`group flex items-center space-x-4 p-4 rounded-xl bg-gradient-to-br from-gray-700/30 to-gray-600/30 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 hover:scale-[1.02] ${
-                          info.type === 'forum' ? 'cursor-pointer' : ''
-                        }`}
-                        onClick={info.type === 'forum' ? () => window.open(info.value, '_blank') : undefined}
-                      >
+                    
+                    const contactLink = getContactLink(info.type, info.value)
+                    const hasTelegramQR = info.type === 'telegram' && info.qrCode
+                    
+                    // 根据类型获取翻译的标签
+                    const getLocalizedLabel = (type: string) => {
+                      const labelMap: Record<string, string> = {
+                        email: t('contact.info.email'),
+                        phone: t('contact.info.phone'),
+                        whatsapp: t('contact.info.whatsapp'),
+                        telegram: t('contact.info.telegram'),
+                        vk: t('contact.info.vk'),
+                        youtube: t('contact.info.youtube')
+                      }
+                      return labelMap[type] || info.label
+                    }
+                    
+                    // Telegram 特殊处理 - 显示两个按钮
+                    if (hasTelegramQR) {
+                      return (
+                        <div key={info.id} className="p-4 rounded-xl bg-gradient-to-br from-gray-700/30 to-gray-600/30 border border-gray-600/30">
+                          <div className="flex items-center space-x-4 mb-3">
+                            <div className="flex-shrink-0">
+                              <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                                <IconComponent className="h-6 w-6 text-white" />
+                              </div>
+                            </div>
+                            <div className="flex-1">
+                              <p className="font-bold text-white text-lg mb-1">{getLocalizedLabel(info.type)}</p>
+                              <p className="text-gray-400 text-sm">{t('contact.info.selectContactMethod')}</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-3">
+                            <a
+                              href={contactLink!}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-center gap-2 px-4 py-2 bg-primary-600 hover:bg-primary-500 rounded-lg text-white text-sm font-medium transition-colors"
+                            >
+                              <Send className="h-4 w-4" />
+                              {t('contact.info.openTelegram')}
+                            </a>
+                            <button
+                              onClick={() => setShowQRCode(info.id)}
+                              className="flex items-center justify-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg text-white text-sm font-medium transition-colors"
+                            >
+                              <span className="text-lg">📱</span>
+                              {t('contact.info.viewQRCode')}
+                            </button>
+                          </div>
+                        </div>
+                      )
+                    }
+                    
+                    // 其他联系方式
+                    const isClickable = info.type !== 'phone' && contactLink
+                    
+                    const content = (
+                      <div className={`group flex items-center space-x-4 p-4 rounded-xl bg-gradient-to-br from-gray-700/30 to-gray-600/30 border border-gray-600/30 hover:border-gray-500/50 transition-all duration-300 ${
+                        isClickable ? 'cursor-pointer hover:scale-[1.02]' : ''
+                      }`}>
                         <div className="flex-shrink-0">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                          <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-emerald-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                             <IconComponent className="h-6 w-6 text-white" />
                           </div>
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-bold text-white text-lg mb-1">{getLabel(info.type)}</p>
+                          <p className="font-bold text-white text-lg mb-1">{getLocalizedLabel(info.type)}</p>
                           <p className="text-gray-300 text-base truncate">
-                            {info.type === 'forum' ? t('contact.info.clickToEnter') : info.value}
+                            {isClickable ? t('contact.info.clickToOpen') : info.value}
                           </p>
                         </div>
-                        {info.type === 'forum' && (
+                        {isClickable && (
                           <div className="flex-shrink-0">
-                            <ExternalLink className="h-5 w-5 text-gray-400 group-hover:text-blue-400 transition-colors" />
+                            <ExternalLink className="h-5 w-5 text-gray-400 group-hover:text-primary-200 transition-colors" />
                           </div>
                         )}
+                      </div>
+                    )
+                    
+                    return isClickable ? (
+                      <a 
+                        key={info.id}
+                        href={contactLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      <div key={info.id}>
+                        {content}
                       </div>
                     )
                   })
@@ -318,8 +397,8 @@ const Contact: React.FC = () => {
                         onChange={(e) => handleInputChange('name', e.target.value)}
                         onBlur={() => handleFieldBlur('name')}
                         placeholder={t('contact.form.namePlaceholder')}
-                        className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-blue-500 transition-all duration-300 ${
-                          formErrors.name ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-blue-500'
+                        className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-primary-500 transition-all duration-300 ${
+                          formErrors.name ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-primary-500'
                         }`}
                         maxLength={VALIDATION_RULES.name.maxLength}
                       />
@@ -346,8 +425,8 @@ const Contact: React.FC = () => {
                         onChange={(e) => handleInputChange('email', e.target.value)}
                         onBlur={() => handleFieldBlur('email')}
                         placeholder={t('contact.form.emailPlaceholder')}
-                        className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-blue-500 transition-all duration-300 ${
-                          formErrors.email ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-blue-500'
+                        className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-primary-500 transition-all duration-300 ${
+                          formErrors.email ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-primary-500'
                         }`}
                       />
                       {formErrors.email && (
@@ -369,8 +448,8 @@ const Contact: React.FC = () => {
                       onChange={(e) => handleInputChange('orderNumber', e.target.value)}
                       onBlur={() => handleFieldBlur('orderNumber')}
                       placeholder={t('contact.form.orderNumberPlaceholder')}
-                      className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-blue-500 transition-all duration-300 ${
-                        formErrors.orderNumber ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-blue-500'
+                      className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-primary-500 transition-all duration-300 ${
+                        formErrors.orderNumber ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-primary-500'
                       }`}
                       maxLength={VALIDATION_RULES.orderNumber.maxLength}
                     />
@@ -397,8 +476,8 @@ const Contact: React.FC = () => {
                       onChange={(e) => handleInputChange('subject', e.target.value)}
                       onBlur={() => handleFieldBlur('subject')}
                       placeholder={t('contact.form.subjectPlaceholder')}
-                      className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-blue-500 transition-all duration-300 ${
-                        formErrors.subject ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-blue-500'
+                      className={`bg-gray-700/50 border-2 text-white placeholder-gray-400 focus:ring-primary-500 transition-all duration-300 ${
+                        formErrors.subject ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-primary-500'
                       }`}
                       maxLength={VALIDATION_RULES.subject.maxLength}
                     />
@@ -421,8 +500,8 @@ const Contact: React.FC = () => {
                       <span className="text-red-400 ml-1">*</span>
                     </label>
                     <textarea
-                      className={`flex w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-blue-500 transition-all duration-300 resize-none ${
-                        formErrors.message ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-blue-500'
+                      className={`flex w-full rounded-xl border-2 bg-gray-700/50 px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-primary-500 transition-all duration-300 resize-none ${
+                        formErrors.message ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-primary-500'
                       }`}
                       rows={6}
                       value={formData.message}
@@ -495,7 +574,7 @@ const Contact: React.FC = () => {
                     type="submit"
                     size="lg"
                     disabled={isSubmitting || Object.keys(formErrors).some(key => formErrors[key as keyof FormErrors])}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                    className="w-full bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
                     {isSubmitting ? (
                       <>
@@ -537,6 +616,48 @@ const Contact: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      {/* 二维码弹窗 */}
+      {showQRCode && (
+        <div 
+          className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4"
+          onClick={() => setShowQRCode(null)}
+        >
+          <div 
+            className="bg-gray-800 rounded-2xl p-6 max-w-md w-full shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-bold text-white">{t('contact.info.telegram')} {t('contact.info.viewQRCode')}</h3>
+              <button
+                onClick={() => setShowQRCode(null)}
+                className="text-gray-400 hover:text-white transition-colors"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </div>
+            {(() => {
+              const qrInfo = contactInfo.find(info => info.id === showQRCode)
+              return qrInfo?.qrCode ? (
+                <div className="space-y-4">
+                  <div className="bg-white p-4 rounded-xl">
+                    <img 
+                      src={qrInfo.qrCode} 
+                      alt="Telegram QR Code" 
+                      className="w-full h-auto"
+                    />
+                  </div>
+                  <p className="text-gray-300 text-sm text-center">
+                    {t('contact.info.scanQRCode')}
+                  </p>
+                </div>
+              ) : (
+                <p className="text-gray-400 text-center py-8">{t('common.noData')}</p>
+              )
+            })()}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

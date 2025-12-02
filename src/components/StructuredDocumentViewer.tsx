@@ -116,7 +116,7 @@ const StructuredDocumentViewer: React.FC<StructuredDocumentViewerProps> = ({ doc
         <CardContent className="p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl flex items-center justify-center">
                 <FileText className="h-8 w-8 text-white" />
               </div>
               <div>
@@ -149,7 +149,7 @@ const StructuredDocumentViewer: React.FC<StructuredDocumentViewerProps> = ({ doc
               onClick={() => setViewMode('card')}
               className={`px-6 py-2 rounded-md flex items-center space-x-2 transition-all duration-200 ${
                 viewMode === 'card'
-                  ? 'bg-blue-600 text-white shadow-lg'
+                  ? 'bg-primary-600 text-white shadow-lg'
                   : 'text-gray-400 hover:text-gray-200'
               }`}
             >
@@ -160,7 +160,7 @@ const StructuredDocumentViewer: React.FC<StructuredDocumentViewerProps> = ({ doc
               onClick={() => setViewMode('detailed')}
               className={`px-6 py-2 rounded-md flex items-center space-x-2 transition-all duration-200 ${
                 viewMode === 'detailed'
-                  ? 'bg-blue-600 text-white shadow-lg'
+                  ? 'bg-primary-600 text-white shadow-lg'
                   : 'text-gray-400 hover:text-gray-200'
               }`}
             >
@@ -187,7 +187,7 @@ const StructuredDocumentViewer: React.FC<StructuredDocumentViewerProps> = ({ doc
                 isStructuredDocument 
                   ? 'bg-purple-600/20 text-purple-300 border border-purple-500/30'
                   : isArticleDocument 
-                  ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30' 
+                  ? 'bg-primary-500/15 text-primary-200 border border-primary-500/30' 
                   : 'bg-green-600/20 text-green-300 border border-green-500/30'
               }`}>
                 {isStructuredDocument 

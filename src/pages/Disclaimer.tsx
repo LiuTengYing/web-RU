@@ -7,7 +7,7 @@ const Disclaimer: React.FC = () => {
   const isEnglish = i18n.language === 'en'
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-900 py-12 px-4">
       <div className="max-w-5xl mx-auto">
         {/* 页面标题 - 优化版 */}
         <div className="text-center mb-16">
@@ -120,7 +120,7 @@ const Disclaimer: React.FC = () => {
             <div className="mt-4 bg-gray-800/50 border border-gray-700 rounded-lg p-4">
               <button 
                 onClick={() => window.location.href = '/contact'}
-                className="text-blue-400 hover:text-blue-300 transition-colors font-semibold hover:underline"
+                className="text-primary-300 hover:text-primary-200 transition-colors font-semibold hover:underline"
               >
                 → {t('legal.visitContact')}
               </button>

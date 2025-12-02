@@ -8,7 +8,6 @@ import {
 } from '../models/Document';
 import { IUser } from '../models/User';
 import User from '../models/User'; // 导入User模型，确保在使用populate前已注册
-import ossSyncService from './ossSyncService';
 import mongoose from 'mongoose';
 
 export class DocumentService {
@@ -719,10 +718,6 @@ export class DocumentService {
         'references.documentId': new mongoose.Types.ObjectId(documentId)
       });
       
-      // 删除所有相关图片
-      for (const image of images) {
-        await ossSyncService.deleteImage(image.url, documentId);
-      }
     } catch (error) {
       console.error('删除文档图片失败:', error);
     }

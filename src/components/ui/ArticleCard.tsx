@@ -34,10 +34,10 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
     <Card className={`hover:shadow-lg transition-all duration-200 cursor-pointer group ${className}`} onClick={onClick}>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
-          <CardTitle className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+          <CardTitle className="text-lg font-semibold text-gray-900 group-hover:text-primary-500 transition-colors line-clamp-2">
             {title}
           </CardTitle>
-          <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors opacity-0 group-hover:opacity-100" />
+          <ArrowRight className="h-5 w-5 text-gray-400 group-hover:text-primary-500 transition-colors opacity-0 group-hover:opacity-100" />
         </div>
         {category && (
           <div className="flex items-center space-x-2">

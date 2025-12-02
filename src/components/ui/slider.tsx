@@ -96,13 +96,13 @@ const Slider: React.FC<SliderProps> = ({
       >
         {/* 填充部分 */}
         <div 
-          className="absolute bottom-0 left-0 w-full bg-blue-500 rounded-full transition-all duration-100"
+          className="absolute bottom-0 left-0 w-full bg-primary-500 rounded-full transition-all duration-100"
           style={{ height: `${percentage}%` }}
         />
         
         {/* 滑块把手 */}
         <div
-          className="absolute w-4 h-4 bg-blue-500 border-2 border-white rounded-full shadow-lg transform -translate-x-1/2 -translate-y-1/2"
+          className="absolute w-4 h-4 bg-primary-500 border-2 border-white rounded-full shadow-lg transform -translate-x-1/2 -translate-y-1/2"
           style={{
             left: '50%',
             bottom: `calc(${percentage}% - 8px)`
@@ -130,14 +130,14 @@ const Slider: React.FC<SliderProps> = ({
         className={cn(
           'w-full h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer dark:bg-gray-600',
           '[&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4',
-          '[&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500 [&::-webkit-slider-thumb]:cursor-pointer',
+          '[&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary-500 [&::-webkit-slider-thumb]:cursor-pointer',
           '[&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white [&::-webkit-slider-thumb]:shadow-lg',
           '[&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:rounded-full',
-          '[&::-moz-range-thumb]:bg-blue-500 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-none',
+          '[&::-moz-range-thumb]:bg-primary-500 [&::-moz-range-thumb]:cursor-pointer [&::-moz-range-thumb]:border-none',
           disabled && 'opacity-50 cursor-not-allowed'
         )}
         style={{
-          background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${percentage}%, #e5e7eb ${percentage}%, #e5e7eb 100%)`
+          background: `linear-gradient(to right, #14b8a6 0%, #14b8a6 ${percentage}%, #e5e7eb ${percentage}%, #e5e7eb 100%)`
         }}
       />
     </div>

@@ -1,19 +1,21 @@
 import { ContactInfo, IContactInfo } from '../models/ContactInfo'
 
 export interface CreateContactInfoData {
-  type: 'email' | 'phone' | 'address' | 'online' | 'forum' | 'whatsapp'
+  type: 'email' | 'phone' | 'whatsapp' | 'telegram' | 'vk' | 'youtube'
   label: string
   value: string
   icon: string
+  qrCode?: string // 二维码图片URL(可选,主要用于telegram)
   isActive?: boolean
   order?: number
 }
 
 export interface UpdateContactInfoData {
-  type?: 'email' | 'phone' | 'address' | 'online' | 'forum' | 'whatsapp'
+  type?: 'email' | 'phone' | 'whatsapp' | 'telegram' | 'vk' | 'youtube'
   label?: string
   value?: string
   icon?: string
+  qrCode?: string
   isActive?: boolean
   order?: number
 }
@@ -54,8 +56,21 @@ export const getAllContactInfoForAdmin = async (): Promise<IContactInfo[]> => {
 export const createContactInfo = async (data: CreateContactInfoData): Promise<IContactInfo> => {
   try {
     // 验证数据
-    if (!data.type || !data.label || !data.value || !data.icon) {
+    if (!data.type || !data.value || !data.icon) {
       throw new Error('缺少必要字段')
+    }
+
+    // 如果没有提供label,根据type自动生成
+    if (!data.label) {
+      const labelMap: Record<string, string> = {
+        email: '邮箱',
+        phone: '电话',
+        whatsapp: 'WhatsApp',
+        telegram: 'Telegram',
+        vk: 'VK',
+        youtube: 'YouTube'
+      }
+      data.label = labelMap[data.type] || data.type
     }
 
     // 检查是否已存在相同类型的联系信息

@@ -383,9 +383,9 @@ const KnowledgeBase: React.FC = () => {
     // 如果正在加载直接访问的文档，显示加载状态
   if (isLoadingDirectDocument) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-400 mx-auto mb-4"></div>
           <p className="text-white text-lg">{t('common.loading')}</p>
         </div>
       </div>
@@ -393,12 +393,12 @@ const KnowledgeBase: React.FC = () => {
   }
 
     return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="space-y-8">
         {/* 页面标题 */}
           <div className="text-center mb-12">
-            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-blue-600 to-blue-800 text-white text-sm font-medium mb-6 shadow-lg">
+            <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-primary-500 to-emerald-500 text-white text-sm font-medium mb-6 shadow-lg">
               <BookOpen className="h-5 w-5 mr-2" />
               {t('knowledge.title')}
             </div>
@@ -421,8 +421,8 @@ const KnowledgeBase: React.FC = () => {
                 }}
                 className={`flex-1 inline-flex items-center justify-center py-4 px-6 text-base font-medium rounded-xl transition-all duration-300 ${
                   activeSection === 'vehicle-research'
-                    ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg transform scale-105'
-                    : 'text-gray-300 hover:text-blue-400 hover:bg-gray-700/50 hover:scale-105'
+                    ? 'bg-gradient-to-r from-primary-500 to-primary-600 text-white shadow-lg transform scale-105'
+                    : 'text-gray-300 hover:text-primary-200 hover:bg-gray-700/50 hover:scale-105'
                 }`}
               >
                 <Car className={`mr-3 h-6 w-6 ${
@@ -477,7 +477,7 @@ const KnowledgeBase: React.FC = () => {
                     <Card className="bg-gradient-to-br from-gray-800/50 to-gray-700/50 border border-gray-600/50 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300">
                       <CardHeader className="pb-6">
                         <CardTitle className="flex items-center text-white text-2xl">
-                          <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mr-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-emerald-500 rounded-xl flex items-center justify-center mr-4">
                             <Car className="h-6 w-6 text-white" />
                           </div>
               {t('knowledge.selectVehicleTitle')}
@@ -572,7 +572,7 @@ const KnowledgeBase: React.FC = () => {
                                        doc.type === 'structured' 
                                          ? 'bg-purple-600/20 text-purple-300 border border-purple-500/30'
                                          : doc.type === 'article' 
-                                         ? 'bg-blue-600/20 text-blue-300 border border-blue-500/30' 
+                                         ? 'bg-primary-500/20 text-primary-200 border border-primary-400/30' 
                                          : 'bg-green-600/20 text-green-300 border border-green-500/30'
                                      }`}>
                                        {doc.type === 'structured' 
@@ -595,7 +595,7 @@ const KnowledgeBase: React.FC = () => {
         <Button 
                                     size="lg"
                                     onClick={() => handleViewDocument(doc)}
-                                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg group-hover:scale-105 transition-all duration-300"
+                                    className="bg-gradient-to-r from-primary-500 to-primary-600 hover:from-primary-400 hover:to-primary-500 text-white shadow-lg group-hover:scale-105 transition-all duration-300"
                                   >
                                     <span className="mr-2">{t('knowledge.view')}</span>
                                     <ChevronRight className="h-5 w-5" />
